@@ -19,6 +19,7 @@ test('sitio público: crear, guardar y reabrir un plan ficticio', async ({ page 
   await page.getByRole('button', { name: 'Guardar esta sección' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado');
   await page.reload();
+  await page.getByRole('link', { name: 'Mi espacio', exact: true }).click();
   await page.getByLabel('Frase secreta', { exact: true }).fill(phrase);
   await page.getByRole('button', { name: 'Desbloquear mi plan', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Mi plan personal', exact: true })).toBeVisible();
