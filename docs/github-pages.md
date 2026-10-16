@@ -1,6 +1,6 @@
 # GitHub Pages: preparación y límites
 
-Estado: publicación de demo pública autorizada por el usuario el 2026-10-16. Preparación del envío al repositorio; activación de Pages pendiente. La evaluación existente en Sites conserva su acceso privado.
+Estado: publicación de demo pública autorizada por el usuario el 2026-10-16. Código enviado en la PR #1; activación de Pages pendiente. La evaluación existente en Sites conserva su acceso privado.
 
 ## Encaje
 
@@ -13,7 +13,7 @@ Refugio compila a archivos estáticos: GitHub Pages puede servir dist/ por HTTPS
 - El fallback offline y coordinación de clientes del SW se restringen a esa base.
 - Almacén y canal por instalación: se mantienen los nombres existentes en raíz; la subruta usa un namespace diferente para evitar colisiones accidentales. Esto no crea aislamiento de seguridad por origen.
 - CSP mediante meta en builds estáticos, y no-referrer mediante meta. El servidor local y hosts compatibles conservan las cabeceras completas existentes.
-- Workflow manual pages.yml con confirmación explícita de demo pública. No hay despliegue en cada push ni se modifica la privacidad de Sites.
+- Workflow pages.yml: publicación al actualizar main, autorizada el 2026-10-16, y ejecución manual con confirmación de demo pública. Sites conserva su privacidad.
 
 ## Límites frente al hosting recomendado
 

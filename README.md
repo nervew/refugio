@@ -75,7 +75,7 @@ Offline requiere descarga inicial íntegra y conservación del almacenamiento po
 
 ## GitHub Pages
 
-Configuración preparada con BASE_PATH=/refugio/, pruebas de subruta y workflow manual. [Guía y límites](docs/github-pages.md). Todavía no se ha publicado en GitHub Pages; el sitio de proyecto sería público y no conserva automáticamente la privacidad de Sites.
+Demo pública autorizada; configuración con BASE_PATH=/refugio/, pruebas de subruta y publicación al actualizar main (o manual). [Guía y límites](docs/github-pages.md). Todavía no se ha publicado en GitHub Pages; el sitio de proyecto sería público y no conserva automáticamente la privacidad de Sites.
 
 ## Hosting posterior
 

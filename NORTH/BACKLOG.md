@@ -16,7 +16,7 @@ Sin defectos bloqueantes conocidos en el alcance local automatizado. La revisió
 
 ## 🟢 TODOs
 
-- [2026-10-15] B-015 `GitHub Pages: revisar propuesta y visibilidad antes de activar`. Compatibilidad y workflow locales; publicación remota pendiente. Ver docs/github-pages.md.
+- [2026-10-15] B-015 `GitHub Pages: activar y verificar demo pública autorizada`. Fuente en PR#1; publicación remota pendiente. Ver docs/github-pages.md.
 
 - [2026-10-15] B-006 `SPEC001: shell, herramientas reales, PWA y readiness offline`. H1; implementado; verificación local aprobada, aceptación integral según gates.
 - [2026-10-15] B-007 `SPEC002: bóveda, sesión y persistencia atómica`. H1; depende SPEC001; implementado; verificación local aprobada, aceptación integral según gates.

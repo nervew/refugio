@@ -1,5 +1,7 @@
 name: Publicar demo de Refugio en GitHub Pages
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       confirm_public_evaluation:
@@ -17,7 +19,7 @@ jobs:
     permissions:
       contents: read
       pages: read
-    if: ${{ inputs.confirm_public_evaluation == true }}
+    if: ${{ github.event_name == 'push' || inputs.confirm_public_evaluation == true }}
     runs-on: ubuntu-latest
     env:
       BASE_PATH: /${{ github.event.repository.name }}/

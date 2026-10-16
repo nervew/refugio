@@ -17,9 +17,9 @@
 - Catálogo de emergencias sin teléfonos accionables no verificados;123/106 no activados. Contenido clínico pending.
 - Solo datos ficticios en esta evaluación; release:check bloquea publicación sin evidencia.
 - NORTH5 actualizado; los12 SPECs están implementados pero aceptación integral sigue abierta.
-- Evaluación privada HTTPS desplegada en Sites; ver docs/private-deployment.json. Sin acceso público, hooks o CI remota ejecutada.
-- Fuente de hosting versionada en repo privado Sites (/workspace/sites/refugio); repositorio original conserva cambios locales.
-- GitHub Pages: base configurable y workflow manual preparados; ADR-003 propuesto, sin publicación/remoto modificado.
+- Evaluación privada HTTPS desplegada en Sites; ver docs/private-deployment.json. El acceso de Sites se mantiene privado.
+- Fuente de hosting versionada en repo privado Sites (/workspace/sites/refugio); fuente enviada además a GitHub mediante PR #1.
+- GitHub Pages: demo pública autorizada el2026-10-16, fuente en PR#1 y CI remota iniciada; activación pendiente.
 - Evidencia: `docs/verification.md`; comandos reales en `.claude/rules/verify.md`.
 
 ## Next
