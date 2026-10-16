@@ -28,10 +28,11 @@ export function canonical(value: unknown): string {
   if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
   if (value !== null && typeof value === 'object')
     return `{${Object.entries(value)
+      .filter(([, v]) => v !== undefined)
       .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
       .map(([k, v]) => `${JSON.stringify(k)}:${canonical(v)}`)
       .join(',')}}`;
-  return JSON.stringify(value);
+  return JSON.stringify(value) ?? 'null';
 }
 export function encode(bytes: Uint8Array): string {
   let binary = '';
@@ -71,6 +72,53 @@ export function safeParse(raw: string, max = MAX_FILE): unknown {
   } catch {
     throw new LocalError('INVALID_FILE');
   }
+}
+/** Compatibilidad solo para texto autenticado por AES-GCM, nunca para archivos sin descifrar.
+ * Versiones anteriores escribían `undefined` al vaciar propiedades opcionales.
+ * Se admite únicamente ese token como valor de propiedad; JSON y Zod siguen
+ * validando la estructura completa. Nunca se evalúa código ni se cambia el disco.
+ */
+function parseDecryptedPayload(raw: string): unknown {
+  try {
+    return safeParse(raw, MAX_PAYLOAD);
+  } catch (error) {
+    if (!(error instanceof LocalError) || error.code !== 'INVALID_FILE') throw error;
+  }
+  const marker = `refugio-legacy-${crypto.randomUUID()}`;
+  if (raw.includes(marker)) throw new LocalError('INVALID_FILE');
+  let patched = '',
+    quoted = false,
+    escaped = false,
+    replacements = 0;
+  for (let i = 0; i < raw.length; i++) {
+    const c = raw[i];
+    if (quoted) {
+      patched += c;
+      if (escaped) escaped = false;
+      else if (c === '\\') escaped = true;
+      else if (c === '"') quoted = false;
+    } else if (c === '"') {
+      quoted = true;
+      patched += c;
+    } else if (raw.startsWith('undefined', i)) {
+      // El error histórico solo producía propiedades, no elementos de arrays.
+      let before = i - 1,
+        after = i + 9;
+      while (before >= 0 && /\s/.test(raw[before])) before--;
+      while (after < raw.length && /\s/.test(raw[after])) after++;
+      const previous = raw[before];
+      const next = raw[after];
+      if (previous !== ':' || (next !== ',' && next !== '}')) throw new LocalError('INVALID_FILE');
+      patched += JSON.stringify(marker);
+      replacements++;
+      i += 8;
+    } else patched += c;
+  }
+  if (!replacements) throw new LocalError('INVALID_FILE');
+  // La expansión del marcador puede aumentar el tamaño; el texto original ya
+  // se limitó a MAX_PAYLOAD al descifrar. Se conserva el límite de profundidad.
+  safeParse(patched, MAX_FILE);
+  return JSON.parse(patched, (_key, value) => (value === marker ? undefined : value));
 }
 export function parseEnvelope(input: unknown): Envelope {
   if (input && typeof input === 'object' && 'formatVersion' in input && input.formatVersion !== 1)
@@ -188,7 +236,7 @@ export async function open(envelope: Envelope, key: CryptoKey): Promise<VaultPay
   try {
     if (raw.length > MAX_PAYLOAD) throw new LocalError('LIMIT_REACHED');
     return validatePayload(
-      safeParse(new TextDecoder('utf-8', { fatal: true }).decode(raw), MAX_PAYLOAD),
+      parseDecryptedPayload(new TextDecoder('utf-8', { fatal: true }).decode(raw)),
     );
   } finally {
     raw.fill(0);

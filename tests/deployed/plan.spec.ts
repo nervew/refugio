@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { recoverLegacyPlan } from '../helpers/legacy-plan';
 test('sitio público: crear, guardar y reabrir un plan ficticio', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -52,4 +53,10 @@ test('sitio público: Bogotá muestra líneas oficiales y sus límites', async (
   ).toHaveAttribute('href', 'https://www.saludcapital.gov.co/Paginas2/llamanos_Linea106.aspx');
   await page.getByRole('combobox', { name: 'Región', exact: true }).selectOption('CO-CUN');
   await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
+});
+
+test('sitio público: recupera un plan cifrado con el formato defectuoso anterior', async ({
+  page,
+}) => {
+  await recoverLegacyPlan(page, '/refugio');
 });

@@ -20,7 +20,8 @@
 - Evaluación privada HTTPS desplegada en Sites; ver docs/private-deployment.json. El acceso de Sites se mantiene privado.
 - Fuente de hosting versionada en repo privado Sites (/workspace/sites/refugio); fuente enviada además a GitHub mediante PR #1.
 - GitHub Pages activo: run38897897430 reejecutado con éxito. Prueba real de URL run38899623865: crear/guardar/recargar/desbloquear aprobada en Chromium escritorio/móvil y WebKit. Usuario reporta botón sin respuesta; falta navegador y estado del botón para reproducir.
-- UX: guardar contenido vuelve al inicio tras éxito; paleta salvia/durazno/lavanda en temas claro/oscuro. 31 unitarias,13 E2E raíz y2 de subruta aprobados; publicación de revisión pendiente.
+- UX: guardar contenido vuelve al inicio tras éxito; paleta salvia/durazno/lavanda en temas claro/oscuro. PR#2 integrada; Pages38903025400 publicado.31 unitarias,13 E2E raíz,2 subruta y6 pruebas de URL pública (38903297999) aprobadas.
+- Incidencia desbloqueo: reproducido INVALID_FILE por undefined en campos opcionales al cifrar; serializador corregido y lectura histórica autenticada añadida.34 unitarias y14 E2E aprobados; publicación en curso. Ver docs/incidents/2026-10-16-vault-unlock.md.
 - Evidencia: `docs/verification.md`; comandos reales en `.claude/rules/verify.md`.
 
 ## Next

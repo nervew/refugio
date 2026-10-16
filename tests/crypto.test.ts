@@ -21,6 +21,22 @@ beforeAll(async () => {
   material = await newMaterial(phrase);
   envelope = await seal(newVault(), material);
 });
+
+async function legacyEnvelope(raw: string): Promise<Envelope> {
+  const { ciphertext: _ciphertext, ...header } = envelope;
+  header.cipher = { ...header.cipher, iv: encode(crypto.getRandomValues(new Uint8Array(12))) };
+  const bytes = await crypto.subtle.encrypt(
+    {
+      name: 'AES-GCM',
+      iv: decode(header.cipher.iv),
+      additionalData: new TextEncoder().encode(canonical(header)),
+      tagLength: 128,
+    },
+    material.key,
+    new TextEncoder().encode(raw),
+  );
+  return { ...header, ciphertext: encode(new Uint8Array(bytes)) };
+}
 describe('T-008/009/015: cifrado real WebCrypto', () => {
   it('deriva una clave no extraíble, parámetros acotados y envelope autenticado', async () => {
     expect(material.key.extractable).toBe(false);
@@ -85,6 +101,53 @@ describe('T-008/009/015: cifrado real WebCrypto', () => {
     expect(safeParse('{"text":"[contenido no estructural]"}')).toEqual({
       text: '[contenido no estructural]',
     });
+  });
+  it('vuelve a abrir un plan después de vaciar un campo opcional', async () => {
+    const data = newVault();
+    data.profile.regionCode = undefined;
+    const saved = await seal(data, material);
+    expect((await open(saved, material.key)).profile.regionCode).toBeUndefined();
+  });
+  it('recupera una bóveda histórica autenticada sin alterar texto del usuario', async () => {
+    const data = newVault();
+    data.profile.regionCode = 'CO-DC';
+    data.reflections.push({
+      id: crypto.randomUUID(),
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      situation: 'Texto literal: undefined, \"campo\":undefined, barras \\\\ y comillas \"',
+      vulnerabilities: [],
+      emotions: [],
+      thoughts: [],
+      bodySensations: [],
+      impulses: [],
+      skillIds: [],
+    });
+    const raw = JSON.stringify(data).replace('"regionCode":"CO-DC"', '"regionCode":undefined');
+    const old = await legacyEnvelope(raw);
+    const recovered = await open(old, material.key);
+    expect(recovered.profile.regionCode).toBeUndefined();
+    expect(recovered.reflections).toEqual(data.reflections);
+    expect(await open(await seal(recovered, material), material.key)).toEqual(recovered);
+    await expect(open(old, await derive('frase incorrecta', old.kdf))).rejects.toMatchObject({
+      code: 'UNLOCK_FAILED',
+    });
+  });
+  it('la compatibilidad no ejecuta código ni acepta arrays rotos u otros datos inválidos', async () => {
+    const raw = JSON.stringify(newVault());
+    for (const broken of [
+      raw.replace('"reflections":[]', '"reflections":[undefined]'),
+      raw.replace('"reflections":[]', '"reflections":undefined()'),
+      raw.replace('"reflections":[]', '"reflections":undefinedevil'),
+    ])
+      await expect(open(await legacyEnvelope(broken), material.key)).rejects.toThrow(
+        'INVALID_FILE',
+      );
+    const invalid = raw.replace('"reflections":[]', '"reflections":undefined');
+    await expect(open(await legacyEnvelope(invalid), material.key)).rejects.toThrow(
+      'INVALID_INPUT',
+    );
+    expect(() => safeParse('{"regionCode":undefined}')).toThrow('INVALID_FILE');
   });
   it('ordena AAD de forma recursiva y determinista', () => {
     expect(canonical({ z: 2, a: { c: 1, b: 0 } })).toBe('{"a":{"b":0,"c":1},"z":2}');
