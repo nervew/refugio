@@ -47,3 +47,7 @@ Registro de lectura de los dos ADRs existentes; sus textos canónicos permanecen
 ## 2026-10-16: autorización de demo pública en Pages
 
 El usuario confirmó publicar la evaluación en GitHub Pages con datos ficticios. ADR-003 aceptado para ese alcance. La activación de Pages y el resultado remoto aún requieren evidencia; los gates profesionales permanecen pendientes.
+
+## 2026-10-16: ajustes UX y recursos de Bogotá para evaluación
+
+Por solicitud del usuario, guardar secciones, preferencias del plan, contactos y reflexiones vuelve al inicio solo tras persistir; se conserva confirmación genérica. Revisión con subagentes UX/diseño: paleta calmada con acentos y temas oscuros equivalentes. El catálogo de demo incorpora123 y106 solo para Bogotá con fuentes oficiales y fecha documental; evidencia/límites en docs/bogota-resources.md. Las revisiones editorial independiente, clínica y demás gates del piloto formal siguen pendientes.

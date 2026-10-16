@@ -70,7 +70,15 @@ describe('T-001/002/004/005/006: reglas de dominio', () => {
     expect(skills.find((s) => s.id === 'tip')!.precautions.join(' ')).toContain('cardiovasculares');
   });
   it('no distribuye números pendientes; filtra país, cobertura y retirados', () => {
-    expect(emergencyResources).toEqual([]);
+    expect(applicableResources('CO', 'CO-DC').map((r) => r.phone)).toEqual(['123', '106']);
+    expect(applicableResources('CO', 'CO-ANT')).toEqual([]);
+    expect(applicableResources('OTHER', 'CO-DC')).toEqual([]);
+    expect(applicableResources('CO', '')).toEqual([]);
+    expect(
+      emergencyResources.every((r) =>
+        r.officialSourceUrl.startsWith('https://www.saludcapital.gov.co/'),
+      ),
+    ).toBe(true);
     const resource: EmergencyResource = {
       id: 'fixture',
       country: 'CO',

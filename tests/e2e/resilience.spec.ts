@@ -27,7 +27,7 @@ test('T001/010: teclado, reordenar, conservar borrador al cancelar navegación y
     page.getByRole('heading', { name: 'Mis próximos pasos', exact: true }),
   ).toBeVisible();
   await expect(page.getByLabel('Mis próximos pasos · nota 1')).toHaveValue('Segundo de prueba');
-  await page.getByRole('button', { name: 'Guardar esta sección' }).click();
+  await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado');
   await page.goto('/#/crisis');
   await expect(page.getByRole('heading', { name: 'Segundo de prueba', exact: true })).toBeVisible();
@@ -64,9 +64,9 @@ test('T015/017: bloqueo y cambios coordinados entre pestañas; sin envío de con
   await page.goto('/#/plan/earlySignals');
   await page.getByRole('button', { name: 'Agregar nota' }).click();
   await page.getByLabel('Señales tempranas · nota 1').fill('Guardado ganador');
-  await page.getByRole('button', { name: 'Guardar esta sección' }).click();
+  await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado');
-  await other.getByRole('button', { name: 'Guardar esta sección' }).click();
+  await other.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(other.getByRole('alert')).toContainText('Hay cambios guardados');
   await expect(other.getByLabel('Señales tempranas · nota 1')).toHaveValue(
     'Borrador de otra pestaña',

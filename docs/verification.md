@@ -66,3 +66,23 @@ Vite emite un aviso por tamaño bruto de chunk>500kB, aunque el presupuesto comp
 Verificación adicional local:31 pruebas unitarias/integración,2 E2E sobre /refugio/ (assets, scope/manifiesto, bóveda y reinicio offline),12 E2E raíz, tipos, formato y presupuestos de build aprobados. Se corrigió un fixture de corrupción que podía dejar el primer carácter del ciphertext sin cambiar; ahora siempre modifica el archivo. No se detectó un fallo de autenticación del cifrado.
 
 La configuración no se ha enviado ni activado en GitHub. El repositorio nervew/refugio es público. Workflow manual y límites en docs/github-pages.md; ADR-003 propuesto. La evaluación Sites existente conserva su privacidad y su build desplegado; no se modificó su audiencia.
+
+## 2026-10-16: GitHub público
+
+PR https://github.com/nervew/refugio/pull/1 integrada en main (b264f5f0aa52897a87c681efbe930cb11456f3d8), autorizada como demo con datos ficticios. CI final de PR 38897618647 aprobada: check, formato, auditoría y12 E2E. Despliegue 38897897430:31 Vitest y2 E2E Pages aprobados, pero configure-pages devuelve404 (Pages sin habilitar); deploy omitido. Requiere activar Settings→Pages→Source:GitHub Actions y reejecutar. No se declara sitio Pages publicado.
+
+## 2026-10-16: prueba sobre la URL publicada
+
+https://github.com/nervew/refugio/actions/runs/38899623865 ejecutó navegadores contra https://nervew.github.io/refugio/ (sin servidor local ni interceptar recursos): HTTP200, crear plan con frase sintética y ambos consentimientos, guardar nota, recargar, desbloquear y comprobar persistencia. Chromium escritorio2.2s, Chromium móvil2.3s y WebKit con perfil iPhone10s:3 aprobadas, sin pageerror. Es emulación, no dispositivo físico. Datos solo en contextos limpios del runner; no se accedió al plan del usuario. Reproducción disponible en tests/deployed/plan.spec.ts y playwright.deployed.config.ts, rama remota fix/live-plan-check. CI general de esa revisión38899623820 aprobada.
+
+No se reprodujo el botón sin respuesta reportado por el usuario. Pendiente navegador concreto y confirmar si cambia a “Abriendo tu espacio…”. No se aplicaron cambios especulativos a la aplicación ni se borró almacenamiento del usuario.
+
+## 2026-10-16: revisión UX, color y Bogotá
+
+Revisión con subagentes de UX y diseño: guardar contenido retorna al menú principal tras persistencia, con confirmación genérica. Secciones, preferencias del plan, contactos y reflexiones tienen acción explícita de guardar y volver. Cancelación y conflicto conservan borrador; los errores no navegan. Se coordinó la navegación con el bloqueador para evitar el aviso de descarte después de guardar.
+
+Catálogo de demo:123/106 solo para CO-DC; fuentes y salvedades en [evidencia Bogotá](bogota-resources.md). Número visible en botón, horarios y fecha documental. No se realizaron llamadas ni se declara aprobación clínica o editorial independiente.
+
+Paleta salvia/durazno/lavanda y variantes oscuras, sin fuentes externas. Subagente visual verificó contraste de nuevos pares mínimo5.56:1 claro/7.28:1 oscuro, axe Home sin infracciones y móvil390px sin overflow. Suite principal comprueba axe y320px.
+
+Verificación de esta revisión:31 Vitest, build y13 E2E raíz aprobados. 2 E2E de subruta aprobados, incluyendo reinicio offline. Despliegue remoto de esta revisión pendiente al redactar este registro.

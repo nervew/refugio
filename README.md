@@ -26,11 +26,11 @@ Abrir `http://localhost:4173` en el mismo equipo donde ejecutaste estos comandos
 
 ## Funciones implementadas
 
-- Plan editable parcial, trece categorías, orden mediante botones y hasta tres pasos iniciales.
+- Plan editable parcial, trece categorías, orden mediante botones y hasta tres pasos iniciales. Los editores de secciones, preferencias del plan, contactos y reflexiones guardan y vuelven al inicio con confirmación.
 - Seis habilidades con precauciones, pasos, personalización y tarjeta de pros/contras.
 - Modo crisis en una acción, ayuda pública bloqueado y plan/contactos solo dentro de sesión abierta.
 - Red personal/profesional, alternativas, mensajes revisados antes de abrir apps externas y copia manual.
-- Selector territorial y contrato de recursos públicos; catálogo vacío hasta verificar oficialmente cobertura. No hay enlaces precargados a 123/106 pendientes.
+- Selector territorial con123 y106 para Bogotá D. C., fuentes oficiales y fecha de consulta documental; sin extrapolar cobertura. [Evidencia y límites](docs/bogota-resources.md).
 - Reflexión voluntaria, intensidades opcionales y edición/eliminación; sin diagnóstico automático.
 - Bóveda AES-256-GCM autenticada, PBKDF2-HMAC-SHA-256 entre600000 y2000000 iteraciones, frase NFC mínimo16 puntos de código, clave no extraíble solo RAM.
 - Bloqueo manual, recarga, cinco minutos de inactividad o segundo plano; aviso y coordinación de pestañas.

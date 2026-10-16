@@ -1,6 +1,6 @@
 .site-header {
   border-bottom: 1px solid var(--line);
-  background: var(--canvas);
+  background: var(--surface);
 }
 .header-inner {
   max-width: 1220px;
@@ -27,7 +27,8 @@
   width: 37px;
   height: 40px;
   border-radius: 19px 19px 12px 12px;
-  background: var(--soft);
+  background: var(--badge-sage);
+  color: var(--accent-sage);
 }
 .brand-dot {
   color: var(--muted);
@@ -80,7 +81,7 @@
 .home-intro h1 em {
   font-family: Georgia, 'Times New Roman', serif;
   font-weight: 400;
-  color: var(--muted);
+  color: var(--accent-sage);
 }
 .home-intro .lede {
   font-size: 1.0625rem;
@@ -88,7 +89,8 @@
   margin-bottom: 1.75rem;
 }
 .small-leaf {
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
+  background: var(--tone-sage);
   padding: 0.25rem 0.4rem;
   border-radius: 20px;
 }
@@ -108,7 +110,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #e9e7dd;
+  background: linear-gradient(145deg, var(--art-sky), var(--art-frame));
+  box-shadow: inset 0 0 0 1px var(--line);
   border-radius: 180px 180px 28px 28px;
   overflow: hidden;
   isolation: isolate;
@@ -120,7 +123,7 @@
   font-style: italic;
   font-size: 1.05rem;
   z-index: 2;
-  color: #183b46;
+  color: var(--ink);
 }
 .art-arch {
   position: absolute;
@@ -128,7 +131,7 @@
   bottom: 67px;
   left: 55px;
   right: 55px;
-  background: #ced9cb;
+  background: var(--art-sky);
   border-radius: 180px 180px 0 0;
   overflow: hidden;
   border: 12px solid #f6f3ed55;
@@ -138,12 +141,12 @@
   width: 83px;
   height: 83px;
   border-radius: 50%;
-  background: #d8bca0;
+  background: var(--art-sun);
   position: absolute;
   top: 80px;
   left: 45%;
   z-index: 1;
-  mix-blend-mode: multiply;
+  box-shadow: 0 0 0 12px #e7b07d18;
 }
 .art-hill {
   position: absolute;
@@ -153,19 +156,19 @@
   transform: rotate(-22deg);
 }
 .hill-back {
-  background: #95b1a6;
+  background: var(--art-back);
   top: 135px;
   left: -70px;
 }
 .hill-front {
-  background: #537e79;
+  background: var(--art-front);
   top: 190px;
   left: 10px;
   transform: rotate(22deg);
 }
 .art-path {
   position: absolute;
-  background: #ded2bc;
+  background: var(--art-path);
   width: 65px;
   height: 180px;
   top: 168px;
@@ -180,7 +183,7 @@
   width: 65px;
   height: 65px;
   transform: rotate(-30deg);
-  color: #365d56;
+  color: var(--accent-sage);
 }
 .home-tools {
   padding: 1rem 0 2rem;
@@ -191,7 +194,7 @@
   gap: 1rem;
 }
 .feature-card {
-  background: var(--surface);
+  background: var(--card-tone, var(--tone-sage));
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 1.6rem;
@@ -212,7 +215,8 @@
 .card-icon {
   width: 45px;
   height: 45px;
-  background: var(--soft);
+  background: var(--card-badge, var(--badge-sage));
+  color: var(--card-accent, var(--accent-sage));
   display: grid;
   place-items: center;
   border-radius: 12px;
@@ -229,14 +233,15 @@
 .plan-card:hover,
 .skill-card:hover {
   border-color: var(--border);
-  box-shadow: 0 4px 20px #183b4608;
+  box-shadow: 0 6px 20px var(--shadow);
 }
 .gentle-strip {
   display: flex;
   gap: 1.2rem;
   align-items: center;
   padding: 1.5rem;
-  background: var(--soft);
+  background: var(--tone-lilac);
+  border: 1px solid var(--line);
   border-radius: 16px;
 }
 .gentle-strip > svg {
@@ -294,4 +299,30 @@
 .evaluation {
   flex-basis: 100%;
   font-size: 0.8125rem;
+}
+
+/* Muted hues distinguish destinations; labels and icons retain their meaning. */
+.feature-card:nth-child(3n + 2),
+.skill-card:nth-child(3n + 2),
+.plan-card:nth-child(3n + 2) {
+  --card-tone: var(--tone-peach);
+  --card-badge: var(--badge-peach);
+  --card-accent: var(--accent-peach);
+}
+.feature-card:nth-child(3n),
+.skill-card:nth-child(3n),
+.plan-card:nth-child(3n) {
+  --card-tone: var(--tone-lilac);
+  --card-badge: var(--badge-lilac);
+  --card-accent: var(--accent-lilac);
+}
+.feature-card .card-link {
+  color: var(--card-accent, var(--accent-sage));
+}
+.main-nav a.active {
+  color: var(--accent-sage);
+  border-color: var(--accent-sage);
+}
+.gentle-strip > svg {
+  color: var(--accent-lilac);
 }

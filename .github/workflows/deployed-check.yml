@@ -1,0 +1,29 @@
+name: Probar sitio público de Refugio
+on:
+  workflow_run:
+    workflows: [Publicar demo de Refugio en GitHub Pages]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  deployed:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npx playwright test --config playwright.deployed.config.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: prueba-sitio-publico
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

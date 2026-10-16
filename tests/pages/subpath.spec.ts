@@ -39,7 +39,7 @@ test('GitHub Pages: plan cifrado y reinicio offline en subruta', async ({ page, 
   await page.goto('/refugio/#/plan/safetySteps');
   await page.getByRole('button', { name: 'Agregar nota' }).click();
   await page.getByLabel('Mis próximos pasos · nota 1').fill('Paso de prueba para Pages');
-  await page.getByRole('button', { name: 'Guardar esta sección' }).click();
+  await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado');
   await page.goto('/refugio/#/settings');
   await expect(page.getByText('Guías disponibles sin conexión', { exact: true })).toBeVisible({

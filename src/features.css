@@ -10,7 +10,7 @@
   padding: 1.5rem;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: var(--surface);
+  background: var(--card-tone, var(--tone-sage));
   min-width: 0;
 }
 .plan-card > div {
@@ -28,7 +28,8 @@
 }
 .step-number {
   font-size: 0.75rem;
-  background: var(--soft);
+  background: var(--card-badge, var(--badge-sage));
+  color: var(--card-accent, var(--accent-sage));
   border-radius: 50%;
   width: 32px;
   height: 32px;
@@ -66,7 +67,7 @@
 }
 .skill-card {
   position: relative;
-  background: var(--surface);
+  background: var(--card-tone, var(--tone-sage));
   border: 1px solid var(--line);
   padding: 2rem 1.5rem;
   border-radius: 16px;
@@ -80,7 +81,7 @@
   color: var(--muted);
 }
 .skill-card > svg {
-  color: var(--muted);
+  color: var(--card-accent, var(--accent-sage));
   margin-bottom: 1.5rem;
 }
 .skill-card h2 {
@@ -232,7 +233,8 @@ progress::-webkit-progress-value {
   font-size: 1rem;
 }
 .crisis-support {
-  background: var(--soft);
+  background: var(--tone-sage);
+  border: 1px solid var(--line);
   border-radius: 22px;
   padding: 2rem;
 }
