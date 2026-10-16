@@ -86,3 +86,11 @@ Catálogo de demo:123/106 solo para CO-DC; fuentes y salvedades en [evidencia Bo
 Paleta salvia/durazno/lavanda y variantes oscuras, sin fuentes externas. Subagente visual verificó contraste de nuevos pares mínimo5.56:1 claro/7.28:1 oscuro, axe Home sin infracciones y móvil390px sin overflow. Suite principal comprueba axe y320px.
 
 Verificación de esta revisión:31 Vitest, build y13 E2E raíz aprobados. 2 E2E de subruta aprobados, incluyendo reinicio offline. Despliegue remoto de esta revisión pendiente al redactar este registro.
+
+### Resultado remoto de la revisión UX
+
+PR#2 integrada en a1925e115ba138b7a0071426db73e593f956b1b5. CI38902729012 y38903025404 aprobadas; Pages38903025400 publicado correctamente. Workflow público38903297999 ejecutó6 pruebas contra https://nervew.github.io/refugio/: crear/guardar/volver al inicio/recargar/desbloquear y líneas Bogotá con fuentes/territorio, en Chromium escritorio, Chromium móvil y WebKit; todas aprobadas. Capturas del inicio se adjuntan al informe del workflow. No se hicieron llamadas ni se accedió a datos del usuario.
+
+## 2026-10-16: desbloqueo de bóveda histórica
+
+Reproducido INVALID_FILE por serialización de propiedades opcionales undefined. Corrección y compatibilidad autenticada, con fixture sintética del formato anterior, en [registro](incidents/2026-10-16-vault-unlock.md).34 unitarias,14 E2E y build aprobados; publicación de corrección en curso.

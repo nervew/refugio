@@ -1,0 +1,21 @@
+{
+  "description": "Solo datos sintéticos. Bóveda AES-GCM con el serializador defectuoso previo (propiedad opcional undefined).",
+  "phrase": "frase sintética para recuperar un plan antiguo",
+  "envelope": {
+    "format": "refugio-vault",
+    "formatVersion": 1,
+    "kdf": {
+      "name": "PBKDF2",
+      "hash": "SHA-256",
+      "iterations": 600000,
+      "salt": "O4qrwSnGnmSyAxAWLCnzww"
+    },
+    "cipher": {
+      "name": "AES-GCM",
+      "keyBits": 256,
+      "tagBits": 128,
+      "iv": "WMFwqDhcS-viD14e"
+    },
+    "ciphertext": "z4o6dwGu9ms_iFg4LDCJBrSaHbaLRB518gtg5Dx2pGWGdazH9vJjEECSWI7eiKifjO9NDqv7DmTe8fxaaDQCK4UiIR6UAbi121ru2qOYbRTqIfDszHnyeT9dOk7wxGGNp0FS8iTP7umDXKyctPybteSNLEe5MRtrjhhZepGduFtb-D1PZB3A3tfesmKwmzZFw7fyfzwmOBo2pQSdFx-SLJ9SPBhHSu-8_6h2qDe4qLKZBf5YfKLarVCOdRpfXSVaNz4Ew9hzMsInRXnp1x6LaLL2Y8dvWF31osLY8ctXbNSnrBoARtxFtBIEmybJ5GVeLDwPbFrmKJiybDu6P_NUdrbYJP0bfasZJ3tBUbv7FqvQ64EvBnAPm3EjBHOtlprwTzYL1OKxeI4gCcEPvjFqATpAmCtumQlfUp-sHmTSxKd7kdNiwz4rxkTmYg1Z1wmy2H74PfF0w1q-xepAKrpTUQ4xp7FNEpQ4dVQ3u1Mac3xYyUg9dSdZSTtCcjZ23UAnC_UH8IZayvD8GOebaFUhmApnp3oefjVYVFPDuLqMmOWy4Dsj_7JRp9gXmBd3JLTaWbD62OQpJqFl7F-5So3B3U1i8wuZERVd8EgSTB3r0RTB8Cqiijo0Uh7c_Dv3Q6auW42CVlMmYzyOzqNJfDLviScZQJ1q40y3IPawNkVlcSoQD_l-xjPlDBdbvl6gQolVdK4njF3QOHuYgtX67ZxT1e93Vt4Dya-sThlutKk_qjPUK6YURQ4MeDPaBboa3E_Mqgc2Z0mx4_woRoVZCKD0OXTTT2ZERD0WabhHGPgSulUKa41mFprARYIkckd0oqyO2jArm5UORXDlTfduZU_4ctsOnWgH5rVyB5jgBZba8pAo753wUcpiXLKlA5Fbwbsu80EUHOvfjP_SY7M4OqRdpeUKU05D_X-__vetAD7-iJqJVzdcXQ-ohLggsknP9WLXnmIlm1Aech2Rjb7RX7ZTFa06UZ85RBcTYe_ABvamTZaG6TkpcBdszeL64PBHbdcIOvgj6nwtsIkW65vTd97Ydp5HS7xRJGSXq0Y7cn-cNeoyrnOOemcUSmDQku2dxoy1p2hs1zOYP2EjVFMgxiT-J-Cp-la-4GSWPeQSnVybZoqwdf6V8_-w3RbVlw--rZsIi5Cmekojrqg3AHAvJRMPdBibVtS58h5WWvNdwa-RkKtIntXYLd3GArK-Tlv0vWliTlHJMQIDwfWQsgAnKQNcAh4q5llVQdezUIIJhvjP514-W60SxYLcAwA4hQOD_XV_LEc"
+  }
+}
