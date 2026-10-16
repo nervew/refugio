@@ -1,0 +1,321 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 50px;
+  padding: 0.8rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.button.primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.button.primary:hover {
+  background: var(--primary);
+  box-shadow: 0 3px 10px #10252d22;
+  text-decoration: underline;
+}
+.button.secondary {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--ink);
+}
+.button.secondary:hover {
+  background: var(--soft);
+}
+.button.danger {
+  background: var(--error);
+  color: var(--canvas);
+}
+.text-button {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  background: transparent;
+  border-color: transparent;
+  padding: 0.6rem 0.4rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-size: 1rem;
+}
+.icon-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.6rem;
+  min-height: 48px;
+  min-width: 48px;
+  border-color: transparent;
+  background: transparent;
+}
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.button-row > a:not(.button) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 48px;
+}
+.tag {
+  display: inline-flex;
+  padding: 0.3rem 0.65rem;
+  border-radius: 7px;
+  background: var(--soft);
+  font-size: 0.875rem;
+  color: var(--ink);
+}
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.muted,
+.subtle {
+  color: var(--muted);
+}
+.subtle {
+  font-size: 1rem;
+}
+.eyebrow {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  font-weight: 650;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.lede {
+  font-size: 1.125rem;
+  max-width: 38rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+.section-space {
+  margin-top: 2rem;
+}
+.narrow {
+  max-width: 44rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.panel {
+  padding: 1.75rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  min-width: 0;
+}
+.panel > svg {
+  margin-bottom: 1rem;
+  color: var(--muted);
+}
+.panel h2 svg {
+  margin-right: 0.5rem;
+}
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 1rem;
+  min-width: 0;
+}
+.field > label,
+.field > span {
+  font-weight: 600;
+}
+.field-help {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 0;
+}
+.field > input,
+.field > select,
+.field > textarea {
+  margin: 0;
+}
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  min-height: 48px;
+  padding: 0.65rem 0;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.check > span {
+  flex: 1;
+  min-width: 0;
+}
+.check > input {
+  margin-top: 0.15rem;
+}
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem 1rem;
+  margin: 1rem 0;
+}
+.page-title {
+  margin-bottom: 2.5rem;
+}
+.page-title .lede {
+  max-width: 44rem;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.section-heading p,
+.section-heading h2 {
+  margin: 0;
+}
+.section-heading > span {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.privacy-note {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 2rem 0 0;
+}
+.privacy-note svg {
+  margin-top: 0.1rem;
+}
+.notice {
+  background: var(--soft);
+  padding: 1.25rem;
+  border-radius: 12px;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.notice p {
+  margin: 0;
+}
+.notice-copy {
+  border-left: 3px solid var(--border);
+  background: var(--soft);
+  padding: 1rem;
+  font-size: 1rem;
+  margin: 0;
+}
+.empty-state {
+  padding: 3rem 2rem;
+  border: 1px dashed var(--border);
+  border-radius: 18px;
+  text-align: center;
+  max-width: 50rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.empty-state svg {
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.empty-state p {
+  max-width: 35rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.empty-state .button {
+  margin: 0.5rem;
+}
+.danger-text {
+  color: var(--error);
+}
+.prose h2:not(:first-child) {
+  margin-top: 2rem;
+}
+.global-notice {
+  padding: 1rem 1.25rem;
+  background: var(--soft);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+.global-notice.error {
+  color: var(--error);
+  background: var(--error-bg);
+  border-color: var(--error);
+}
+.connection-banner,
+.session-banner {
+  padding: 0.65rem 1.5rem;
+  text-align: center;
+  font-size: 0.9375rem;
+  background: var(--soft);
+  border-bottom: 1px solid var(--border);
+}
+.session-banner button {
+  margin-left: 0.75rem;
+}
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 50;
+  background: var(--surface);
+  padding: 1rem;
+  border: 2px solid var(--focus);
+}
+.skip-link:focus {
+  top: 1rem;
+}
+summary {
+  min-height: 48px;
+  padding: 0.6rem 0;
+  cursor: pointer;
+}
+
+html {
+  scroll-padding-bottom: 10rem;
+}
+button,
+a,
+input,
+textarea,
+select,
+summary {
+  scroll-margin-bottom: 10rem;
+}
