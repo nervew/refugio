@@ -1,0 +1,74 @@
+[
+  {
+    "id": "MDN-SW",
+    "url": "https://raw.githubusercontent.com/mdn/content/main/files/en-us/web/api/service_worker_api/index.md",
+    "path": "specs/research/MDN-SW.md",
+    "sha256": "23e1ceade068931eeab937c8af58b615fc7130f6bffa9bf076ddbc7643c02228",
+    "status": "consultada",
+    "date": "2026-10-15"
+  },
+  {
+    "id": "MDN-storage",
+    "url": "https://raw.githubusercontent.com/mdn/content/main/files/en-us/web/api/storage_api/storage_quotas_and_eviction_criteria/index.md",
+    "path": "specs/research/MDN-storage.md",
+    "sha256": "0b6662b2fe059251bd33dc3bd96753204f848b58153f9d193838a9b166d92f67",
+    "status": "consultada",
+    "date": "2026-10-15"
+  },
+  {
+    "id": "MDN-install",
+    "url": "https://raw.githubusercontent.com/mdn/content/main/files/en-us/web/progressive_web_apps/guides/making_pwas_installable/index.md",
+    "path": "specs/research/MDN-install.md",
+    "sha256": "0e2712500837b9985b1a69b2954d6e5c01e3e4e27e8f1a0db5832de9546810b2",
+    "status": "consultada",
+    "date": "2026-10-15"
+  },
+  {
+    "id": "WCAG22",
+    "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/index.html",
+    "path": "specs/research/WCAG22.html",
+    "sha256": "26fd85fad76ac1f8d0a08f595099d0435a8b9af5656e1c0f2596eef2519ad37c",
+    "status": "consultada",
+    "date": "2026-10-15"
+  },
+  {
+    "id": "OWASP-local",
+    "url": "https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/cheatsheets/HTML5_Security_Cheat_Sheet.md",
+    "path": "specs/research/OWASP-local.md",
+    "sha256": "e60bd4a55f5233938ffcbb3fdf429f13cdc663b8e659a77aeb633bc1e37d2c96",
+    "status": "consultada",
+    "date": "2026-10-15"
+  },
+  {
+    "id": "WCAG-contrast-minimum",
+    "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/contrast-minimum.html",
+    "path": "specs/research/WCAG-contrast-minimum.html",
+    "sha256": "f1d819b44cc5ba64e962ce64889de2ab214af6911b27a119f7d24c43197b2e64",
+    "status": "consultada",
+    "date": "2026-10-15"
+  },
+  {
+    "id": "WCAG-reflow",
+    "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/21/reflow.html",
+    "path": "specs/research/WCAG-reflow.html",
+    "sha256": "8d42fb8675bbdeb81e500ee9b535c3e7649672c5b53d6888fcb3f224fa2f5740",
+    "status": "consultada",
+    "date": "2026-10-15"
+  },
+  {
+    "id": "WCAG-focus-not-obscured-minimum",
+    "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/22/focus-not-obscured-minimum.html",
+    "path": "specs/research/WCAG-focus-not-obscured-minimum.html",
+    "sha256": "aa21bdd5cd9e3d5fb4c7b15b7ecefc13b62997cda19ff19dd0f32a5e51a6e613",
+    "status": "consultada",
+    "date": "2026-10-15"
+  },
+  {
+    "id": "WCAG-target-size-minimum",
+    "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/22/target-size-minimum.html",
+    "path": "specs/research/WCAG-target-size-minimum.html",
+    "sha256": "b5cd439141c3771e69cd20596f6fbda5fadfe28967f8783559066a435a62b123",
+    "status": "consultada",
+    "date": "2026-10-15"
+  }
+]

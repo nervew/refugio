@@ -1,0 +1,11 @@
+{
+  "scope": "Refugio MVP — evaluación local con datos ficticios",
+  "gates": {
+    "clinicalReview": { "approved": false, "evidence": "" },
+    "regionalEmergencySources": { "approved": false, "evidence": "" },
+    "colombianLegalReview": { "approved": false, "evidence": "" },
+    "independentSecurityReview": { "approved": false, "evidence": "" },
+    "physicalIOSAndAndroid": { "approved": false, "evidence": "" },
+    "manualAccessibilityAndUsability": { "approved": false, "evidence": "" }
+  }
+}

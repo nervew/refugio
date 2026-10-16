@@ -1,0 +1,9 @@
+{
+  "environment": "Chromium 154 headless Linux, viewport 390x844; laboratorio local, sin equivalencia con hardware móvil",
+  "scenario": "20 navegaciones inicio→crisis sobre shell precacheado con contexto offline",
+  "repetitions": 20,
+  "p95Ms": 116,
+  "minMs": 77,
+  "maxMs": 121,
+  "includesAutomationOverhead": true
+}

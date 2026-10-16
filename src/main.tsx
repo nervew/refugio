@@ -1,0 +1,10 @@
+import { createRoot } from 'react-dom/client';
+import { App } from './app/App';
+import { startPWA } from './platform/pwa';
+import './tokens.css';
+import './controls.css';
+import './shell.css';
+import './features.css';
+import './styles-responsive.css';
+createRoot(document.getElementById('root')!).render(<App />);
+void startPWA();

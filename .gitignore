@@ -218,3 +218,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Refugio — Node, builds and local verification artifacts
+node_modules/
+playwright-report/
+test-results/
+coverage/
+*.tsbuildinfo
+*.refugio
