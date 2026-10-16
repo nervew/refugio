@@ -1,6 +1,6 @@
 # GitHub Pages: preparación y límites
 
-Estado: publicación de demo pública autorizada por el usuario el 2026-10-16. Código enviado en la PR #1; activación de Pages pendiente. La evaluación existente en Sites conserva su acceso privado.
+Estado: publicación de demo pública autorizada por el usuario el 2026-10-16. PR #1 integrada en main (b264f5f0aa52897a87c681efbe930cb11456f3d8). Pages fue habilitado y el despliegue38897897430 se reejecutó con éxito. Sitio activo en https://nervew.github.io/refugio/. La prueba pública38899623865 aprobó creación, guardado y reapertura en Chromium escritorio/móvil y WebKit. La evaluación existente en Sites conserva su acceso privado.
 
 ## Encaje
 
@@ -39,7 +39,7 @@ Las dos primeras órdenes verifican el build bajo subruta en puerto4175, sin dep
 1. Subir código/configuración a nervew/refugio mediante una rama y PR.
 2. Fusionar el cambio en main para publicar la evaluación autorizada.
 3. En el repositorio: Settings → Pages → Build and deployment → Source: GitHub Actions.
-4. Actions → Publicar demo de Refugio en GitHub Pages → Run workflow, rama main; marcar confirm_public_evaluation.
+4. Tras habilitar Pages, volver a ejecutar el workflow fallido 38897897430 (Re-run all jobs), o Actions → Publicar demo de Refugio en GitHub Pages → Run workflow, rama main; marcar confirm_public_evaluation.
 5. Esperar que el job deploy termine correctamente y abrir la URL que devuelve GitHub. No se puede declarar publicado solo por compilar localmente.
 
 No introducir secretos, frases, backups .refugio o datos personales en GitHub. El workflow solo publica dist/. Su confirmación es para demo pública con datos ficticios, no una aprobación clínica/legal ni para uso con datos reales. release:check sigue bloqueando el lanzamiento formal mientras falten evidencias.

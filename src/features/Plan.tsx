@@ -5,6 +5,7 @@ import { SafeLink, useAction, useDraftState, useVault } from '../app/context';
 import { planFields, type PlanField, type PlanItem } from '../domain/model';
 import { newId, now } from '../domain/actions';
 import { vault } from '../security/vault';
+import { useReturnHomeAfterSave } from '../app/save-navigation';
 import { skills } from '../content/skills';
 export function Plan() {
   return (
@@ -82,6 +83,7 @@ function PlanOverview() {
   );
 }
 function FavoriteSkills() {
+  const returnHome = useReturnHomeAfterSave();
   const { data } = useVault();
   const { run, busy } = useAction();
   const { draft, setDraft, clean } = useDraftState(data!.plan.prioritySkillIds);
@@ -97,8 +99,10 @@ function FavoriteSkills() {
               d.plan.updatedAt = now();
             }),
           )
-        )
+        ) {
           clean();
+          returnHome();
+        }
       }}
     >
       <h2>Habilidades que quiero tener a mano</h2>
@@ -124,7 +128,7 @@ function FavoriteSkills() {
         ))}
       </div>
       <button className="button primary" disabled={busy}>
-        Guardar preferencias
+        Guardar preferencias y volver al inicio
       </button>
     </form>
   );
@@ -145,6 +149,7 @@ export function PlanSection() {
   );
 }
 function SectionEditor({ field }: { field: PlanField }) {
+  const returnHome = useReturnHomeAfterSave();
   const { data } = useVault();
   const { busy, run } = useAction();
   const { draft, setDraft, clean, changed } = useDraftState<PlanItem[]>(
@@ -172,6 +177,7 @@ function SectionEditor({ field }: { field: PlanField }) {
     ) {
       setDraft(items);
       clean();
+      returnHome();
     }
   }
   return (
@@ -244,7 +250,7 @@ function SectionEditor({ field }: { field: PlanField }) {
         {draft.length >= max && <p>Límite: {max} notas. No se borrarán notas automáticamente.</p>}
         <div className="save-row">
           <button className="button primary" disabled={busy}>
-            {busy ? 'Guardando…' : 'Guardar esta sección'}
+            {busy ? 'Guardando…' : 'Guardar y volver al inicio'}
           </button>
           <span className="muted">{changed ? 'Cambios sin guardar' : 'Sección guardada'}</span>
         </div>

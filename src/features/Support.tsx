@@ -3,6 +3,7 @@ import { Phone, MessageCircle, Plus, ArrowUp, ArrowDown, Star } from 'lucide-rea
 import { PageTitle, PrivateGate, TextField, EmptyState, Dialog, Check } from '../app/components';
 import { SafeLink, useAction, useApp, useDraftState, useVault } from '../app/context';
 import { vault } from '../security/vault';
+import { useReturnHomeAfterSave } from '../app/save-navigation';
 import { newId, now, phoneDestination, removeContact, saveContact } from '../domain/actions';
 import { type Contact } from '../domain/model';
 import { copyText } from '../platform/files';
@@ -170,6 +171,7 @@ function SupportList() {
   );
 }
 function ContactEditor({ contact, onClose }: { contact: Contact; onClose: () => void }) {
+  const returnHome = useReturnHomeAfterSave();
   const { data } = useVault();
   const { draft, setDraft, clean, changed } = useDraftState(structuredClone(contact));
   const [emergency, setEmergency] = useState(
@@ -195,7 +197,7 @@ function ContactEditor({ contact, onClose }: { contact: Contact; onClose: () => 
           )
         ) {
           clean();
-          onClose();
+          returnHome();
         }
       }}
     >
@@ -265,7 +267,7 @@ function ContactEditor({ contact, onClose }: { contact: Contact; onClose: () => 
       </Check>
       <div className="button-row">
         <button className="button primary" disabled={busy}>
-          Guardar contacto
+          Guardar contacto y volver al inicio
         </button>
         <button
           type="button"

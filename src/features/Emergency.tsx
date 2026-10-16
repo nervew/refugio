@@ -76,27 +76,39 @@ export function Emergency() {
           </p>
         )}
       </section>
+      {!region && country === 'CO' && (
+        <p className="notice section-space">
+          Selecciona tu región para ver sus líneas de apoyo. Si estás en Bogotá, elige Bogotá D. C.
+        </p>
+      )}
       {resources.length ? (
         resources.map((resource) => (
-          <article className="panel section-space" key={resource.id}>
+          <article className="panel section-space emergency-resource" key={resource.id}>
             <h2>{resource.serviceName}</h2>
             <p>{resource.coverageText}</p>
             <p>{resource.availabilityText}</p>
-            <p>Verificado: {new Date(resource.verifiedAt).toLocaleDateString('es-CO')}</p>
+            <p className="subtle">Fuente: Secretaría Distrital de Salud de Bogotá.</p>
+            <p className="subtle">
+              Consultada el{' '}
+              {new Date(resource.verifiedAt).toLocaleDateString('es-CO', {
+                timeZone: 'America/Bogota',
+              })}
+              . Verificación documental; no se realizó una llamada de prueba.
+            </p>
             {reviewOverdue(resource) && (
               <p className="notice-copy">
                 Puede haber cambiado. La revisión de esta información está pendiente.
               </p>
             )}
             <a className="button primary" href={`tel:${resource.phone}`}>
-              <Phone size={18} aria-hidden="true" /> Llamar al recurso verificado
+              <Phone size={18} aria-hidden="true" /> Llamar al {resource.phone}
             </a>
             <a href={resource.officialSourceUrl} target="_blank" rel="noopener noreferrer">
-              Consultar fuente oficial
+              Consultar fuente oficial de la línea {resource.phone}
             </a>
           </article>
         ))
-      ) : (
+      ) : region || country !== 'CO' ? (
         <section className="empty-state section-space">
           <h2>Aún no hay una línea verificada para esta región</h2>
           <p>
@@ -110,7 +122,7 @@ export function Emergency() {
             Volver al siguiente paso
           </SafeLink>
         </section>
-      )}
+      ) : null}
       {data && data.plan.personalEmergencyContactIds.length > 0 && (
         <section className="panel section-space">
           <h2>Recursos que añadiste a tu plan</h2>

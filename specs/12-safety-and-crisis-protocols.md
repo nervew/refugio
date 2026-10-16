@@ -114,3 +114,7 @@ En MVP sin backend, los cambios se distribuyen en una actualización del catálo
 - SAFE-09: revisión clínica acreditada del contenido exacto y registro editorial de recursos son condiciones de publicación pública; el prototipo documental puede revisarse con ambos gates abiertos.
 
 La estrategia de pruebas deberá vincular estos IDs a [14](14-testing-strategy.md). La responsabilidad clínica y editorial debe asignarse en [15](15-mvp-roadmap.md) antes de desarrollar contenido para publicación. No hay validación clínica externa realizada en esta entrega.
+
+## Actualización de evaluación · 2026-10-16
+
+Por solicitud expresa del usuario, la demo incorpora123/106 exclusivamente para Bogotá tras cotejo documental con páginas oficiales. Ver [registro de evidencia y límites](../docs/bogota-resources.md). La etiqueta de catálogo verified tiene ese alcance documental; no se declara llamada de prueba, segunda revisión editorial independiente ni aprobación clínica. Los requisitos de revisión del piloto formal de este documento permanecen pendientes. La UI indica la salvedad y no atribuye cobertura nacional.

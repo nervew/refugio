@@ -14,12 +14,13 @@
 - Cifrado AES-GCM, PBKDF2 acotado, clave RAM, CAS y bloqueo; sin cuentas, backend de negocio, IA o telemetría.
 - Temas, responsive, axe, precache offline y coordinación segura de actualizaciones verificados en Chromium Linux.
 - Fuentes/clínica, privacidad legal, auditoría independiente, lectores/usabilidad y matriz física iOS/Android pendientes.
-- Catálogo de emergencias sin teléfonos accionables no verificados;123/106 no activados. Contenido clínico pending.
+- Demo:123/106 activos solo Bogotá, cotejados con fuentes oficiales el2026-10-16; sin llamada de prueba ni aprobación clínica. Ver docs/bogota-resources.md.
 - Solo datos ficticios en esta evaluación; release:check bloquea publicación sin evidencia.
 - NORTH5 actualizado; los12 SPECs están implementados pero aceptación integral sigue abierta.
 - Evaluación privada HTTPS desplegada en Sites; ver docs/private-deployment.json. El acceso de Sites se mantiene privado.
 - Fuente de hosting versionada en repo privado Sites (/workspace/sites/refugio); fuente enviada además a GitHub mediante PR #1.
-- GitHub Pages: demo pública autorizada el2026-10-16, fuente en PR#1 y CI remota iniciada; activación pendiente.
+- GitHub Pages activo: run38897897430 reejecutado con éxito. Prueba real de URL run38899623865: crear/guardar/recargar/desbloquear aprobada en Chromium escritorio/móvil y WebKit. Usuario reporta botón sin respuesta; falta navegador y estado del botón para reproducir.
+- UX: guardar contenido vuelve al inicio tras éxito; paleta salvia/durazno/lavanda en temas claro/oscuro. 31 unitarias,13 E2E raíz y2 de subruta aprobados; publicación de revisión pendiente.
 - Evidencia: `docs/verification.md`; comandos reales en `.claude/rules/verify.md`.
 
 ## Next

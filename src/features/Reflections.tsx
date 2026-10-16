@@ -4,6 +4,7 @@ import { Plus, ArrowLeft } from 'lucide-react';
 import { PageTitle, PrivateGate, EmptyState, TextField } from '../app/components';
 import { useAction, useDraftState, useVault } from '../app/context';
 import { vault } from '../security/vault';
+import { useReturnHomeAfterSave } from '../app/save-navigation';
 import { type Reflection, splitLines } from '../domain/model';
 import { newId, now, saveReflection } from '../domain/actions';
 import { skills, getSkill } from '../content/skills';
@@ -124,6 +125,7 @@ function ReflectionList() {
   );
 }
 function ReflectionEditor({ initial, onClose }: { initial: Reflection; onClose: () => void }) {
+  const returnHome = useReturnHomeAfterSave();
   const { draft, setDraft, clean, changed } = useDraftState(structuredClone(initial));
   const { run, busy } = useAction();
   const patch = (p: Partial<Reflection>) => setDraft({ ...draft, ...p });
@@ -169,7 +171,7 @@ function ReflectionEditor({ initial, onClose }: { initial: Reflection; onClose: 
           };
           if (await run(() => vault.change((d) => saveReflection(d, reflection)))) {
             clean();
-            onClose();
+            returnHome();
           }
         }}
       >
@@ -281,7 +283,7 @@ function ReflectionEditor({ initial, onClose }: { initial: Reflection; onClose: 
           onChange={(learning) => patch({ learning })}
         />
         <button className="button primary" disabled={busy}>
-          {busy ? 'Guardando…' : 'Guardar mi reflexión'}
+          {busy ? 'Guardando…' : 'Guardar reflexión y volver al inicio'}
         </button>
       </form>
     </section>

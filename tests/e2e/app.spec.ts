@@ -32,6 +32,7 @@ test('T003/006: crisis en una acción, seis guías y ausencia de números pendie
   await page.goto('/#/skills');
   await expect(page.locator('.skill-card')).toHaveCount(6);
   await page.goto('/#/emergency');
+  await page.getByRole('combobox', { name: 'Región', exact: true }).selectOption('CO-ANT');
   await expect(
     page.getByRole('heading', { name: 'Aún no hay una línea verificada para esta región' }),
   ).toBeVisible();
@@ -45,13 +46,17 @@ test('T001/005/008/015: editar, persistir, contactar y bloquear sin datos legibl
   await page.getByRole('link', { name: /Señales tempranas/ }).click();
   await page.getByRole('button', { name: 'Agregar nota' }).click();
   await page.getByLabel('Señales tempranas · nota 1').fill('CANARIO PRIVADO DE PRUEBA');
-  await page.getByRole('button', { name: 'Guardar esta sección' }).click();
+  await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado en este dispositivo');
+  await expect(page).toHaveURL(/\/#\/$/);
   await page.goto('/#/support');
   await page.getByRole('button', { name: 'Agregar contacto' }).click();
   await page.getByLabel('Nombre o alias').fill('Ana de prueba');
   await page.getByLabel('Teléfono', { exact: true }).fill('+57 300 000 0000');
-  await page.getByRole('button', { name: 'Guardar contacto' }).click();
+  await page.getByRole('button', { name: 'Guardar contacto y volver al inicio' }).click();
+  await expect(page).toHaveURL(/\/#\/$/);
+  await expect(page.getByRole('status')).toContainText('Guardado en este dispositivo');
+  await page.goto('/#/support');
   await expect(page.getByRole('heading', { name: 'Ana de prueba' })).toBeVisible();
   await page.getByRole('button', { name: 'Elegir principal' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado');
@@ -92,7 +97,10 @@ test('T004: reflexión voluntaria guarda intensidades ausentes sin diagnóstico'
   await page.goto('/#/reflections');
   await page.getByRole('button', { name: 'Nueva reflexión' }).click();
   await page.getByLabel('Lo que quiero recordar (opcional)').fill('Pedir compañía fue útil.');
-  await page.getByRole('button', { name: 'Guardar mi reflexión' }).click();
+  await page.getByRole('button', { name: 'Guardar reflexión y volver al inicio' }).click();
+  await expect(page).toHaveURL(/\/#\/$/);
+  await expect(page.getByRole('status')).toContainText('Guardado en este dispositivo');
+  await page.goto('/#/reflections');
   await expect(page.getByText('Pedir compañía fue útil.', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Ver y editar reflexión' }).click();
   await expect(page.getByLabel('Intensidad antes')).toHaveValue('');
@@ -103,7 +111,7 @@ test('T009/012: descargar, borrar y restaurar con confirmación', async ({ page 
   await page.goto('/#/plan/safetySteps');
   await page.getByRole('button', { name: 'Agregar nota' }).click();
   await page.getByLabel('Mis próximos pasos · nota 1').fill('Mi paso de prueba');
-  await page.getByRole('button', { name: 'Guardar esta sección' }).click();
+  await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await page.goto('/#/backup');
   const downloadEvent = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Descargar copia cifrada' }).click();
@@ -178,4 +186,30 @@ test('T014: móvil 320px sin desbordamiento y movimiento reducido', async ({ pag
       true,
     );
   }
+});
+
+test('Bogotá: fuentes oficiales, números visibles y cobertura explícita', async ({ page }) => {
+  await page.goto('/#/emergency');
+  await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
+  await page.getByRole('combobox', { name: 'Región', exact: true }).selectOption('CO-DC');
+  await expect(page.getByRole('link', { name: 'Llamar al 123', exact: true })).toHaveAttribute(
+    'href',
+    'tel:123',
+  );
+  await expect(page.getByRole('link', { name: 'Llamar al 106', exact: true })).toHaveAttribute(
+    'href',
+    'tel:106',
+  );
+  await expect(
+    page.getByRole('link', { name: 'Consultar fuente oficial de la línea 106' }),
+  ).toHaveAttribute('href', 'https://www.saludcapital.gov.co/Paginas2/llamanos_Linea106.aspx');
+  await expect(
+    page.getByText(/Verificación documental; no se realizó una llamada de prueba/),
+  ).toHaveCount(2);
+  await expect(page.getByText(/Servicio gratuito, las 24 horas/)).toBeVisible();
+  await page.getByRole('combobox', { name: 'Región', exact: true }).selectOption('CO-CUN');
+  await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
+  await expect(
+    page.getByRole('heading', { name: 'Aún no hay una línea verificada para esta región' }),
+  ).toBeVisible();
 });

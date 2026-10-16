@@ -41,7 +41,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [blocker, updatePending]);
   const session = useSyncExternalStore(vault.subscribe, vault.getSnapshot);
   useEffect(() => {
-    setNotice(null);
+    setNotice(
+      location.state?.saved === true
+        ? { text: 'Guardado en este dispositivo.', error: false }
+        : null,
+    );
     const title = document.querySelector<HTMLElement>('main h1');
     title?.focus();
     window.scrollTo(0, 0);
