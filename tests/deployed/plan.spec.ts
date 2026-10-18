@@ -41,7 +41,7 @@ test('sitio público: Bogotá muestra líneas oficiales y sus límites', async (
     contentType: 'image/png',
   });
   await page.goto('/refugio/#/emergency');
-  await page.getByRole('combobox', { name: 'Región', exact: true }).selectOption('CO-DC');
+  await page.getByRole('combobox', { name: 'Ciudad o región', exact: true }).selectOption('CO-DC');
   await expect(page.getByRole('link', { name: 'Llamar al 123', exact: true })).toHaveAttribute(
     'href',
     'tel:123',
@@ -53,7 +53,7 @@ test('sitio público: Bogotá muestra líneas oficiales y sus límites', async (
   await expect(
     page.getByRole('link', { name: 'Consultar fuente oficial de la línea 106' }),
   ).toHaveAttribute('href', 'https://www.saludcapital.gov.co/Paginas2/llamanos_Linea106.aspx');
-  await page.getByRole('combobox', { name: 'Región', exact: true }).selectOption('CO-CUN');
+  await page.getByRole('combobox', { name: 'Ciudad o región', exact: true }).selectOption('CO-CUN');
   await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
 });
 

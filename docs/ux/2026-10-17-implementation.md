@@ -25,3 +25,5 @@ Estas mejoras requieren volver a probar comprensión con personas. Pasar pruebas
 ## Verificación
 
 34 pruebas unitarias,17 pruebas de navegador raíz,2 pruebas de subruta, build, formato y diff aprobados. Despliegue de esta revisión en curso al redactar este registro. Se añaden recorridos de primer uso, ayuda sin registro, estados de bloqueo, foco de primera nota y320px con letra ampliada/axe. El workflow de sitio público comprobará los textos y acceso a líneas sin crear plan, además de guardar/desbloquear y recuperar el formato histórico en tres perfiles de navegador.
+
+Resultado remoto: PR#4 integrada2f5edbfe98c95aec18ff2c2214eb996b34330b02. CI39087866893 y39087995051 aprobadas. Pages39087995029 publicado;12 pruebas de URL pública39088094503 aprobadas en Chromium escritorio/móvil y WebKit, incluyendo propósito emocional, guía y líneas sin registro, creación/guardado/desbloqueo y recuperación histórica. El siguiente control de comprensión requiere participantes reales.

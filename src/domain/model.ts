@@ -16,8 +16,8 @@ export const planFields = {
     '¿Qué emociones reconoces? Por ejemplo: miedo, tristeza o rabia.',
   ],
   earlySignals: [
-    'Cómo noto que empieza a ser difícil',
-    '¿Qué cambios notas cuando tus emociones empiezan a sobrepasarte?',
+    'Cuando me cuesta manejar mis emociones',
+    'Cuando te cuesta manejar lo que sientes, ¿qué cambia en tu cuerpo, tus pensamientos o lo que haces? Por ejemplo: me tenso, pienso que nada va a mejorar o dejo de hablar con otras personas.',
   ],
   vulnerabilities: [
     'Cómo estaba antes',
@@ -155,7 +155,7 @@ export const vaultSchema = z
     updatedAt: date,
     profile: z.strictObject({
       locale: z.literal('es-CO'),
-      country: z.literal('CO'),
+      country: z.enum(['CO', 'DE', 'NL']),
       regionCode: z
         .string()
         .regex(/^[A-Z0-9-]{1,30}$/)

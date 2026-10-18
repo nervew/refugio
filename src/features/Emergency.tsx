@@ -7,7 +7,7 @@ import { vault } from '../security/vault';
 import { phoneDestination } from '../domain/actions';
 export function Emergency() {
   const { data } = useVault();
-  const [country, setCountry] = useState('CO');
+  const [country, setCountry] = useState<string>(data?.profile.country ?? 'CO');
   const [region, setRegion] = useState(data?.profile.regionCode ?? '');
   const { run, busy } = useAction();
   const resources = applicableResources(country, region);
@@ -38,26 +38,30 @@ export function Emergency() {
               }}
             >
               <option value="CO">Colombia</option>
+              <option value="DE">Alemania</option>
+              <option value="NL">Países Bajos</option>
               <option value="OTHER">Otro país</option>
             </select>
           </label>
           <label className="field">
-            Región
+            Ciudad o región
             <select
-              disabled={country !== 'CO'}
+              disabled={country === 'OTHER'}
               value={region}
               onChange={(e) => setRegion(e.target.value)}
             >
-              <option value="">Seleccionar región</option>
-              {regions.map(([code, label]) => (
-                <option value={code} key={code}>
-                  {label}
-                </option>
-              ))}
+              <option value="">Seleccionar ciudad o región</option>
+              {regions
+                .filter(([code]) => code.startsWith(`${country}-`))
+                .map(([code, label]) => (
+                  <option value={code} key={code}>
+                    {label}
+                  </option>
+                ))}
             </select>
           </label>
         </div>
-        {data && country === 'CO' ? (
+        {data && (country === 'CO' || country === 'DE' || country === 'NL') ? (
           <button
             className="button secondary"
             disabled={busy}
@@ -65,13 +69,14 @@ export function Emergency() {
               void run(
                 () =>
                   vault.change((d) => {
+                    d.profile.country = country;
                     d.profile.regionCode = region || undefined;
                   }),
-                'Región guardada dentro de tu plan cifrado.',
+                'Ubicación guardada dentro de tu plan cifrado.',
               )
             }
           >
-            Guardar región en mi plan
+            Guardar ubicación en mi plan
           </button>
         ) : (
           <p className="subtle">
@@ -79,9 +84,10 @@ export function Emergency() {
           </p>
         )}
       </section>
-      {!region && country === 'CO' && (
+      {!region && country !== 'OTHER' && (
         <p className="notice section-space">
-          Selecciona tu región para ver sus líneas de apoyo. Si estás en Bogotá, elige Bogotá D. C.
+          Selecciona tu ciudad o región para ver sus líneas de apoyo. Elige el lugar desde donde vas
+          a llamar.
         </p>
       )}
       {resources.length ? (
@@ -90,11 +96,11 @@ export function Emergency() {
             <h2>{resource.serviceName}</h2>
             <p>{resource.coverageText}</p>
             <p>{resource.availabilityText}</p>
-            <p className="subtle">Fuente: Secretaría Distrital de Salud de Bogotá.</p>
+            <p className="subtle">Fuente: {resource.sourceName}.</p>
             <p className="subtle">
               Consultada el{' '}
               {new Date(resource.verifiedAt).toLocaleDateString('es-CO', {
-                timeZone: 'America/Bogota',
+                timeZone: 'UTC',
               })}
               . Verificación documental; no se realizó una llamada de prueba.
             </p>
@@ -111,7 +117,7 @@ export function Emergency() {
             </a>
           </article>
         ))
-      ) : region || country !== 'CO' ? (
+      ) : region || country === 'OTHER' ? (
         <section className="empty-state section-space">
           <h2>Aún no hay una línea verificada para esta región</h2>
           <p>

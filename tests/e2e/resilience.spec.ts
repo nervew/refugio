@@ -63,16 +63,16 @@ test('T015/017: bloqueo y cambios coordinados entre pestañas; sin envío de con
   await other.goto('/#/plan/earlySignals');
   await other.getByRole('button', { name: 'Escribir mi primera nota' }).click();
   await other
-    .getByLabel('Cómo noto que empieza a ser difícil · nota 1')
+    .getByLabel('Cuando me cuesta manejar mis emociones · nota 1')
     .fill('Borrador de otra pestaña');
   await page.goto('/#/plan/earlySignals');
   await page.getByRole('button', { name: 'Escribir mi primera nota' }).click();
-  await page.getByLabel('Cómo noto que empieza a ser difícil · nota 1').fill('Guardado ganador');
+  await page.getByLabel('Cuando me cuesta manejar mis emociones · nota 1').fill('Guardado ganador');
   await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado');
   await other.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(other.getByRole('alert')).toContainText('Hay cambios guardados');
-  await expect(other.getByLabel('Cómo noto que empieza a ser difícil · nota 1')).toHaveValue(
+  await expect(other.getByLabel('Cuando me cuesta manejar mis emociones · nota 1')).toHaveValue(
     'Borrador de otra pestaña',
   );
   await page.getByRole('button', { name: 'Bloquear', exact: true }).click();
