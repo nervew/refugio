@@ -69,14 +69,32 @@ describe('T-001/002/004/005/006: reglas de dominio', () => {
     }
     expect(skills.find((s) => s.id === 'tip')!.precautions.join(' ')).toContain('cardiovasculares');
   });
+  it('separa ciudades y países sin ampliar la cobertura a departamentos', () => {
+    for (const [country, code, phones] of [
+      ['CO', 'CO-ANT-MDE', ['123', '106']],
+      ['CO', 'CO-VAC-CLO', ['123', '106']],
+      ['DE', 'DE-HE-FRA', ['112', '116123']],
+      ['NL', 'NL-NH-AMS', ['112', '0880767000']],
+    ] as const) {
+      expect(applicableResources(country, code).map((r) => r.phone)).toEqual(phones);
+      expect(applicableResources('OTHER', code)).toEqual([]);
+      const data = newVault();
+      data.profile.country = country;
+      data.profile.regionCode = code;
+      expect(validatePayload(data).profile.country).toBe(country);
+    }
+    expect(applicableResources('CO', 'CO-VAC')).toEqual([]);
+    expect(applicableResources('CO', 'DE-HE-FRA')).toEqual([]);
+    expect(applicableResources('DE', '')).toEqual([]);
+  });
   it('no distribuye números pendientes; filtra país, cobertura y retirados', () => {
     expect(applicableResources('CO', 'CO-DC').map((r) => r.phone)).toEqual(['123', '106']);
     expect(applicableResources('CO', 'CO-ANT')).toEqual([]);
     expect(applicableResources('OTHER', 'CO-DC')).toEqual([]);
     expect(applicableResources('CO', '')).toEqual([]);
     expect(
-      emergencyResources.every((r) =>
-        r.officialSourceUrl.startsWith('https://www.saludcapital.gov.co/'),
+      emergencyResources.every(
+        (r) => r.officialSourceUrl.startsWith('https://') && r.sourceName.length > 0,
       ),
     ).toBe(true);
     const resource: EmergencyResource = {
@@ -85,6 +103,7 @@ describe('T-001/002/004/005/006: reglas de dominio', () => {
       regionCodes: ['CO-DC'],
       coverageText: 'Solo fixture sintético',
       serviceName: 'Fixture',
+      sourceName: 'Fixture sintético',
       phone: '999',
       availabilityText: 'Ejemplo',
       officialSourceUrl: 'https://example.gov.test',

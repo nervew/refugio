@@ -21,7 +21,7 @@ test('primer uso: guía y líneas de atención accesibles sin crear un plan', as
     page.getByRole('heading', { name: 'Pausa la acción un momento, si estás a salvo.' }),
   ).toBeVisible();
   await page.getByRole('link', { name: 'Líneas y urgencias', exact: true }).click();
-  await page.getByRole('combobox', { name: 'Región', exact: true }).selectOption('CO-DC');
+  await page.getByRole('combobox', { name: 'Ciudad o región', exact: true }).selectOption('CO-DC');
   await expect(page.getByRole('link', { name: 'Llamar al 123', exact: true })).toHaveAttribute(
     'href',
     'tel:123',

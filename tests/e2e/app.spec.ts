@@ -32,7 +32,7 @@ test('T003/006: crisis en una acción, seis guías y ausencia de números pendie
   await page.goto('/#/skills');
   await expect(page.locator('.skill-card')).toHaveCount(6);
   await page.goto('/#/emergency');
-  await page.getByRole('combobox', { name: 'Región', exact: true }).selectOption('CO-ANT');
+  await page.getByRole('combobox', { name: 'Ciudad o región', exact: true }).selectOption('CO-ANT');
   await expect(
     page.getByRole('heading', { name: 'Aún no hay una línea verificada para esta región' }),
   ).toBeVisible();
@@ -43,10 +43,10 @@ test('T001/005/008/015: editar, persistir, contactar y bloquear sin datos legibl
   page,
 }) => {
   await create(page);
-  await page.getByRole('link', { name: /Cómo noto que empieza a ser difícil/ }).click();
+  await page.getByRole('link', { name: /Cuando me cuesta manejar mis emociones/ }).click();
   await page.getByRole('button', { name: 'Escribir mi primera nota' }).click();
   await page
-    .getByLabel('Cómo noto que empieza a ser difícil · nota 1')
+    .getByLabel('Cuando me cuesta manejar mis emociones · nota 1')
     .fill('CANARIO PRIVADO DE PRUEBA');
   await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado en este dispositivo');
@@ -88,7 +88,7 @@ test('T001/005/008/015: editar, persistir, contactar y bloquear sin datos legibl
   await page.reload();
   await unlock(page);
   await page.goto('/#/plan/earlySignals');
-  await expect(page.getByLabel('Cómo noto que empieza a ser difícil · nota 1')).toHaveValue(
+  await expect(page.getByLabel('Cuando me cuesta manejar mis emociones · nota 1')).toHaveValue(
     'CANARIO PRIVADO DE PRUEBA',
   );
 });
@@ -193,7 +193,7 @@ test('T014: móvil 320px sin desbordamiento y movimiento reducido', async ({ pag
 test('Bogotá: fuentes oficiales, números visibles y cobertura explícita', async ({ page }) => {
   await page.goto('/#/emergency');
   await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
-  await page.getByRole('combobox', { name: 'Región', exact: true }).selectOption('CO-DC');
+  await page.getByRole('combobox', { name: 'Ciudad o región', exact: true }).selectOption('CO-DC');
   await expect(page.getByRole('link', { name: 'Llamar al 123', exact: true })).toHaveAttribute(
     'href',
     'tel:123',
@@ -209,9 +209,33 @@ test('Bogotá: fuentes oficiales, números visibles y cobertura explícita', asy
     page.getByText(/Verificación documental; no se realizó una llamada de prueba/),
   ).toHaveCount(2);
   await expect(page.getByText(/Servicio gratuito, las 24 horas/)).toBeVisible();
-  await page.getByRole('combobox', { name: 'Región', exact: true }).selectOption('CO-CUN');
+  await page.getByRole('combobox', { name: 'Ciudad o región', exact: true }).selectOption('CO-CUN');
   await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
   await expect(
     page.getByRole('heading', { name: 'Aún no hay una línea verificada para esta región' }),
   ).toBeVisible();
+});
+
+test('ubicación cifrada: conserva país y ciudad al reabrir sin revelarlos con el plan bloqueado', async ({
+  page,
+}) => {
+  await create(page);
+  await page.goto('/#/emergency');
+  await page.getByRole('combobox', { name: 'País', exact: true }).selectOption('DE');
+  await page
+    .getByRole('combobox', { name: 'Ciudad o región', exact: true })
+    .selectOption('DE-HE-FRA');
+  await page.getByRole('button', { name: 'Guardar ubicación en mi plan' }).click();
+  await expect(page.getByRole('status')).toContainText('Ubicación guardada');
+  await page.reload();
+  await expect(page.getByRole('combobox', { name: 'País', exact: true })).toHaveValue('CO');
+  await expect(page.getByRole('combobox', { name: 'Ciudad o región', exact: true })).toHaveValue(
+    '',
+  );
+  await unlock(page);
+  await page.goto('/#/emergency');
+  await expect(page.getByRole('combobox', { name: 'País', exact: true })).toHaveValue('DE');
+  await expect(page.getByRole('combobox', { name: 'Ciudad o región', exact: true })).toHaveValue(
+    'DE-HE-FRA',
+  );
 });
