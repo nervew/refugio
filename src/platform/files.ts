@@ -1,8 +1,8 @@
-export function download(blob: Blob) {
+export function download(blob: Blob, filename = 'refugio-copia.refugio') {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;
-  anchor.download = 'refugio-copia.refugio';
+  anchor.download = filename;
   anchor.click();
   setTimeout(() => URL.revokeObjectURL(url), 10_000);
 }

@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Download, Upload, Printer } from 'lucide-react';
+import { Download, Upload } from 'lucide-react';
 import { PageTitle, TextField, Check } from '../app/components';
 import { SafeLink, useAction, useVault } from '../app/context';
 import { vault } from '../security/vault';
 import { download } from '../platform/files';
 import { LocalError } from '../domain/errors';
-import { planFields, type PlanField } from '../domain/model';
+import { PlanExport } from './PlanExport';
 export function Backup() {
   const session = useVault();
   const { data } = session;
@@ -18,10 +18,6 @@ export function Backup() {
   );
   const [confirmed, setConfirmed] = useState(false);
   const [adult, setAdult] = useState(false);
-  const [printing, setPrinting] = useState(false);
-  const [printAck, setPrintAck] = useState(false);
-  const [includeContacts, setIncludeContacts] = useState(false);
-  const [sections, setSections] = useState<PlanField[]>(['safetySteps']);
   const { run, busy } = useAction();
   function cancel() {
     vault.cancelInspection();
@@ -198,95 +194,7 @@ export function Backup() {
           </form>
         </section>
       )}
-      <section className="panel section-space">
-        <Printer size={26} aria-hidden="true" />
-        <h2>Un plan a mano, también en papel</h2>
-        <p>
-          Este plan contiene información privada. Otras personas podrían ver el papel o el PDF.
-          Elige qué incluir. Las reflexiones nunca se incluyen.
-        </p>
-        {data ? (
-          <>
-            <div className="choice-grid">
-              {Object.entries(planFields).map(([key, [label]]) => (
-                <Check
-                  key={key}
-                  checked={sections.includes(key as PlanField)}
-                  onChange={(on) =>
-                    setSections(
-                      on ? [...sections, key as PlanField] : sections.filter((f) => f !== key),
-                    )
-                  }
-                >
-                  {label}
-                </Check>
-              ))}
-            </div>
-            <Check checked={includeContacts} onChange={setIncludeContacts}>
-              Incluir contactos personales (desmarcado por defecto).
-            </Check>
-            <Check checked={printAck} onChange={setPrintAck}>
-              Entiendo que la impresión y el PDF quedan fuera de la protección del cifrado.
-            </Check>
-            <button
-              className="button secondary"
-              disabled={!printAck}
-              onClick={() => setPrinting(true)}
-            >
-              Preparar vista de impresión
-            </button>
-            {printing && (
-              <>
-                <div className="print-preview" id="print-plan">
-                  <h2>Refugio · Mi plan personal</h2>
-                  {sections.map((field) => (
-                    <section key={field}>
-                      <h3>{planFields[field][0]}</h3>
-                      {data.plan[field].length ? (
-                        <ol>
-                          {data.plan[field].map((item) => (
-                            <li key={item.id}>{item.text}</li>
-                          ))}
-                        </ol>
-                      ) : (
-                        <p>Sin notas guardadas.</p>
-                      )}
-                    </section>
-                  ))}
-                  {includeContacts && (
-                    <section>
-                      <h3>Mis contactos</h3>
-                      {data.contacts.map((c) => (
-                        <p key={c.id}>
-                          {c.displayName} · {c.channels[0].value}
-                        </p>
-                      ))}
-                    </section>
-                  )}
-                  <p>Este plan no sustituye atención profesional ni emergencias.</p>
-                </div>
-                <div className="button-row">
-                  <button
-                    className="button primary"
-                    onClick={() => {
-                      if (vault.getSnapshot().data && printAck) window.print();
-                    }}
-                  >
-                    Abrir diálogo de impresión
-                  </button>
-                  <button onClick={() => setPrinting(false)}>Cerrar vista legible</button>
-                </div>
-                <p className="subtle">
-                  El PDF del sistema depende del navegador. Refugio no puede borrar tus impresiones
-                  ni archivos descargados.
-                </p>
-              </>
-            )}
-          </>
-        ) : (
-          <SafeLink to="/unlock">Desbloquear para preparar impresión</SafeLink>
-        )}
-      </section>
+      <PlanExport />
     </>
   );
 }

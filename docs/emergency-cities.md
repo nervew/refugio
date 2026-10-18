@@ -28,4 +28,4 @@ Se mantienen las selecciones departamentales anteriores, sin asignarles cobertur
 
 ## Validación
 
-Comprobados: tipos, 35 pruebas unitarias/integración, build y 19 pruebas E2E en Chromium (incluidas accesibilidad, móvil y lectura cifrada histórica). También pasaron las 2 pruebas de subruta GitHub Pages. Publicación pendiente al registrar este cambio. Las pruebas nuevas comprueban selección de ciudades, país, número, fuente, ausencia de cruces de cobertura y persistencia cifrada sin exponer ubicación al bloquear.
+Comprobados: tipos, 35 pruebas unitarias/integración, build y 19 pruebas E2E en Chromium (incluidas accesibilidad, móvil y lectura cifrada histórica). También pasaron las 2 pruebas de subruta GitHub Pages. PR #5 integrada en 7591e28; Pages 39089884920 publicado con éxito. Verificación de URL pública 39089978382 aprobada en Chromium escritorio, Pixel 7 y WebKit iPhone 13. Las pruebas nuevas comprueban selección de ciudades, país, número, fuente, ausencia de cruces de cobertura y persistencia cifrada sin exponer ubicación al bloquear.
