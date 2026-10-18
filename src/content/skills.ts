@@ -2,6 +2,7 @@ import type { SkillId } from '../domain/model';
 export interface Skill {
   id: SkillId;
   title: string;
+  technicalName?: string;
   short: string;
   goal: string;
   when: string;
@@ -16,7 +17,8 @@ export const skills: Skill[] = [
   {
     ...review,
     id: 'stop',
-    title: 'STOP',
+    title: 'Hacer una pausa antes de actuar',
+    technicalName: 'STOP',
     short: 'Una pausa antes de actuar',
     goal: 'Crear un espacio entre un impulso y tu siguiente acción.',
     when: 'Cuando notas urgencia por responder o decidir.',
@@ -36,7 +38,8 @@ export const skills: Skill[] = [
   {
     ...review,
     id: 'pros-contras',
-    title: 'Pros y contras',
+    title: 'Comparar mis opciones',
+    technicalName: 'Pros y contras',
     short: 'Recordar tus alternativas',
     goal: 'Recordar las consecuencias de seguir un impulso y de elegir una alternativa segura.',
     when: 'Sobre todo en preparación. En un momento difícil, puedes leer una tarjeta que ya preparaste.',
@@ -56,9 +59,10 @@ export const skills: Skill[] = [
   {
     ...review,
     id: 'tip',
-    title: 'TIP',
+    title: 'Observar el entorno y aflojar el cuerpo',
+    technicalName: 'TIP · adaptación parcial',
     short: 'Una alternativa corporal suave',
-    goal: 'Acompañar la activación con una alternativa conservadora. Esta guía no representa todos los procedimientos de TIP.',
+    goal: 'Observar tu entorno y, si te resulta cómodo, notar el apoyo del cuerpo. Es una adaptación parcial de TIP.',
     when: 'Si quieres una práctica suave y no necesitas atención urgente.',
     precautions: [
       'Las técnicas de temperatura, ejercicio y cambios respiratorios pueden no ser adecuadas, especialmente con condiciones cardiovasculares, respiratorias, desmayos, embarazo, lesiones o restricciones médicas. Esta lista no es exhaustiva.',
@@ -79,9 +83,10 @@ export const skills: Skill[] = [
   {
     ...review,
     id: 'aceptas',
-    title: 'ACEPTAS',
+    title: 'Dar un descanso a la atención',
+    technicalName: 'ACEPTAS',
     short: 'Dar un descanso a la atención',
-    goal: 'Atravesar un pico de malestar con una actividad breve y segura.',
+    goal: 'Dedicar un rato breve a una actividad conocida y segura cuando el malestar se siente intenso.',
     when: 'Cuando abordar el problema ahora no ayuda o no es posible.',
     precautions: [
       'No uses la distracción para ignorar peligro o una necesidad médica.',
@@ -100,9 +105,9 @@ export const skills: Skill[] = [
   {
     ...review,
     id: 'cinco-sentidos',
-    title: 'Cálmate con los cinco sentidos',
+    title: 'Explorar una sensación cómoda',
     short: 'Buscar una sensación amable',
-    goal: 'Encontrar un estímulo cotidiano reconfortante o neutral.',
+    goal: 'Probar algo cotidiano que te resulte agradable o neutral.',
     when: 'Si quieres apoyo sensorial y puedes elegir qué sentido utilizar.',
     precautions: [
       'No necesitas usar todos los sentidos. Evita estímulos que te incomoden, alergias, aromas fuertes o sonidos altos.',
@@ -120,7 +125,8 @@ export const skills: Skill[] = [
   {
     ...review,
     id: 'salvara',
-    title: 'SALVARA',
+    title: 'Hacer este momento más llevadero',
+    technicalName: 'SALVARA',
     short: 'Hacer este momento más llevadero',
     goal: 'Encontrar una pequeña acción de significado, calma o autocuidado.',
     when: 'Si quieres una pausa y una guía breve sin resolver todo el problema.',

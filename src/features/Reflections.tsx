@@ -46,7 +46,7 @@ function ReflectionList() {
         eyebrow="Cuando tengas espacio"
         description="Un lugar para recordar qué pasó y qué te ayudó. No hay respuestas correctas; escribir es siempre opcional."
       >
-        Mi registro y reflexión
+        Mis reflexiones
       </PageTitle>
       <div className="section-heading">
         <p>{all.length} experiencias guardadas</p>
@@ -60,7 +60,10 @@ function ReflectionList() {
       </div>
       {!all.length && (
         <EmptyState title="Puedes volver cuando quieras">
-          <p>No necesitas registrar cada crisis. Este espacio está aquí cuando te resulte útil.</p>
+          <p>
+            Puedes escribir sobre un momento difícil cuando te resulte útil. No necesitas registrar
+            todo lo que te pasa.
+          </p>
         </EmptyState>
       )}
       <div className="reflection-list">
@@ -130,11 +133,11 @@ function ReflectionEditor({ initial, onClose }: { initial: Reflection; onClose: 
   const { run, busy } = useAction();
   const patch = (p: Partial<Reflection>) => setDraft({ ...draft, ...p });
   const labels = {
-    vulnerabilities: 'Vulnerabilidades presentes',
-    emotions: 'Emociones',
-    thoughts: 'Pensamientos',
-    bodySensations: 'Sensaciones corporales',
-    impulses: 'Impulsos',
+    vulnerabilities: 'Cómo estaba antes (opcional)',
+    emotions: 'Qué emociones sentí (opcional)',
+    thoughts: 'Qué pasó por mi mente (opcional)',
+    bodySensations: 'Qué noté en mi cuerpo (opcional)',
+    impulses: 'Qué tuve ganas de hacer (opcional)',
   } as const;
   return (
     <section className="narrow">
@@ -151,7 +154,7 @@ function ReflectionEditor({ initial, onClose }: { initial: Reflection; onClose: 
       </button>
       <PageTitle
         eyebrow="Sin prisa, sin juicio"
-        description="Puedes omitir cualquier campo. La intensidad no representa riesgo ni un diagnóstico."
+        description="Puedes escribir sobre un momento difícil, hayas usado una guía o no. Todos los campos son opcionales; valorar tu malestar no es un diagnóstico ni una evaluación de riesgo."
       >
         Mi reflexión
       </PageTitle>
@@ -176,7 +179,7 @@ function ReflectionEditor({ initial, onClose }: { initial: Reflection; onClose: 
         }}
       >
         <TextField
-          label="Situación (opcional)"
+          label="Qué pasó (opcional)"
           multiline
           maxLength={4000}
           value={draft.situation ?? ''}
@@ -215,14 +218,14 @@ function ReflectionEditor({ initial, onClose }: { initial: Reflection; onClose: 
           />
         ))}
         <TextField
-          label="Desencadenante"
+          label="Qué pasó justo antes (opcional)"
           multiline
           value={draft.trigger ?? ''}
           onChange={(trigger) => patch({ trigger })}
-          help="El acontecimiento que precedió al cambio; se distingue de las condiciones previas."
+          help="Algo que ocurrió justo antes de que cambiara cómo te sentías. En «Cómo estaba antes» puedes anotar condiciones como cansancio o hambre."
         />
         <fieldset>
-          <legend>Habilidades que elegí (opcional)</legend>
+          <legend>Guías que elegí (opcional)</legend>
           <div className="choice-grid">
             {skills.map((skill) => (
               <label className="check" key={skill.id}>
@@ -242,10 +245,14 @@ function ReflectionEditor({ initial, onClose }: { initial: Reflection; onClose: 
             ))}
           </div>
         </fieldset>
+        <p className="subtle">
+          Si probaste una guía u otra acción, puedes valorar cuánto malestar sentías antes y
+          después. Puedes dejarlo vacío si no probaste nada o no lo recuerdas.
+        </p>
         <div className="two-columns">
           {(['intensityBefore', 'intensityAfter'] as const).map((key) => (
             <label className="field" key={key}>
-              Intensidad {key === 'intensityBefore' ? 'antes' : 'después'}
+              Malestar {key === 'intensityBefore' ? 'antes' : 'después'} de lo que probé (opcional)
               <select
                 value={draft[key] ?? ''}
                 onChange={(e) =>
@@ -257,9 +264,9 @@ function ReflectionEditor({ initial, onClose }: { initial: Reflection; onClose: 
                   <option key={i} value={i}>
                     {i}
                     {i === 0
-                      ? ' · sin intensidad percibida'
+                      ? ' · sin malestar percibido'
                       : i === 10
-                        ? ' · máxima intensidad que percibo'
+                        ? ' · máximo malestar para mí'
                         : ''}
                   </option>
                 ))}
@@ -268,12 +275,12 @@ function ReflectionEditor({ initial, onClose }: { initial: Reflection; onClose: 
           ))}
         </div>
         <TextField
-          label="Resultados (opcional)"
+          label="Cómo terminó ese momento (opcional)"
           multiline
           maxLength={4000}
           value={draft.outcome ?? ''}
           onChange={(outcome) => patch({ outcome })}
-          help="No me ayudó también es una respuesta válida."
+          help="Si probaste algo, puedes escribir si te ayudó o no. No necesitas sentirte mejor para escribir aquí."
         />
         <TextField
           label="Lo que quiero recordar (opcional)"

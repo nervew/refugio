@@ -11,27 +11,42 @@ export const skillIds = [
 ] as const;
 export type SkillId = (typeof skillIds)[number];
 export const planFields = {
-  frequentEmotions: ['Emociones frecuentes', 'Por ejemplo: miedo, tristeza, rabia.'],
-  earlySignals: ['Señales tempranas', '¿Qué notas cuando empieza a ser difícil?'],
-  vulnerabilities: ['Vulnerabilidades', 'Condiciones previas: dormir poco, hambre, cansancio.'],
-  triggers: ['Desencadenantes', 'Acontecimientos: una discusión, un mensaje, un recuerdo.'],
-  thoughts: [
-    'Pensamientos asociados',
-    'Palabras o imágenes que aparecen. No son hechos por sí mismas.',
+  frequentEmotions: [
+    'Lo que siento con frecuencia',
+    '¿Qué emociones reconoces? Por ejemplo: miedo, tristeza o rabia.',
   ],
-  bodySensations: ['Sensaciones corporales', 'Por ejemplo: tensión en los hombros.'],
-  impulses: ['Impulsos', 'Lo que sientes ganas de hacer, aunque no lo hagas.'],
+  earlySignals: [
+    'Cómo noto que empieza a ser difícil',
+    '¿Qué cambios notas cuando tus emociones empiezan a sobrepasarte?',
+  ],
+  vulnerabilities: [
+    'Cómo estaba antes',
+    '¿Había algo que lo hiciera más difícil, como dormir poco, hambre o cansancio?',
+  ],
+  triggers: [
+    'Qué pasó justo antes',
+    '¿Ocurrió algo antes de que cambiara cómo te sentías? Puede ser una discusión, un mensaje o un recuerdo.',
+  ],
+  thoughts: [
+    'Qué pasa por mi mente',
+    '¿Qué palabras o imágenes aparecen? No son hechos por sí mismas.',
+  ],
+  bodySensations: [
+    'Qué noto en mi cuerpo',
+    '¿Qué sensaciones reconoces? Por ejemplo: tensión en los hombros.',
+  ],
+  impulses: ['Lo que tengo ganas de hacer', '¿Qué sientes ganas de hacer, aunque no lo hagas?'],
   helpfulStrategies: [
-    'Estrategias que ayudan',
-    'Acciones seguras y conocidas que quieres recordar.',
+    'Acciones que me ayudan',
+    '¿Qué acciones seguras y conocidas quieres recordar para un momento difícil?',
   ],
   unhelpfulStrategies: [
-    'Estrategias que empeoran',
-    'Lo que prefieres evitar durante un momento difícil.',
+    'Lo que prefiero evitar',
+    '¿Qué cosas has notado que hacen más difícil ese momento?',
   ],
   safetySteps: [
-    'Mis próximos pasos',
-    'Hasta tres instrucciones breves, en el orden que prefieras.',
+    'Mis pasos para un momento difícil',
+    '¿Qué quieres hacer cuando tus emociones te sobrepasen? Puedes guardar hasta tres pasos breves, en el orden que prefieras.',
   ],
 } as const;
 export type PlanField = keyof typeof planFields;

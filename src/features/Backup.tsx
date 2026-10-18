@@ -45,8 +45,8 @@ export function Backup() {
           <Download size={26} aria-hidden="true" />
           <h2>Descargar una copia cifrada</h2>
           <p>
-            Incluye todo tu plan, contactos, preferencias de habilidades y reflexiones. Se abre con
-            la frase que tenía tu plan al descargarla.
+            Incluye todo tu plan, contactos, notas de guías y reflexiones. Se abre con la frase que
+            tenía tu plan al descargarla.
           </p>
           {data ? (
             <button
@@ -255,7 +255,7 @@ export function Backup() {
                   ))}
                   {includeContacts && (
                     <section>
-                      <h3>Mi red de apoyo</h3>
+                      <h3>Mis contactos</h3>
                       {data.contacts.map((c) => (
                         <p key={c.id}>
                           {c.displayName} · {c.channels[0].value}

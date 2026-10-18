@@ -8,7 +8,7 @@ async function create(page: Page) {
   await page.getByLabel('Repite la frase secreta').fill(phrase);
   await page.getByLabel('Confirmo que tengo 18 años o más.').check();
   await page.getByLabel(/Entiendo que este plan puede contener/).check();
-  await page.getByRole('button', { name: 'Crear mi plan cifrado' }).click();
+  await page.getByRole('button', { name: 'Crear mi plan' }).click();
   await expect(page.getByRole('heading', { name: 'Mi plan personal', exact: true })).toBeVisible();
 }
 test('T001/010: teclado, reordenar, conservar borrador al cancelar navegación y preferencias', async ({
@@ -16,29 +16,31 @@ test('T001/010: teclado, reordenar, conservar borrador al cancelar navegación y
 }) => {
   await create(page);
   await page.goto('/#/plan/safetySteps');
-  await page.getByRole('button', { name: 'Agregar nota' }).click();
-  await page.getByLabel('Mis próximos pasos · nota 1').fill('Primero de prueba');
-  await page.getByRole('button', { name: 'Agregar nota' }).click();
-  await page.getByLabel('Mis próximos pasos · nota 2').fill('Segundo de prueba');
+  await page.getByRole('button', { name: 'Escribir mi primera nota' }).click();
+  await page.getByLabel('Mis pasos para un momento difícil · nota 1').fill('Primero de prueba');
+  await page.getByRole('button', { name: 'Agregar otra nota' }).click();
+  await page.getByLabel('Mis pasos para un momento difícil · nota 2').fill('Segundo de prueba');
   await page.getByRole('button', { name: 'Subir nota 2', exact: true }).click();
   page.once('dialog', (dialog) => dialog.dismiss());
-  await page.getByRole('link', { name: 'Habilidades', exact: true }).click();
+  await page.getByRole('link', { name: 'Guías', exact: true }).click();
   await expect(
-    page.getByRole('heading', { name: 'Mis próximos pasos', exact: true }),
+    page.getByRole('heading', { name: 'Mis pasos para un momento difícil', exact: true }),
   ).toBeVisible();
-  await expect(page.getByLabel('Mis próximos pasos · nota 1')).toHaveValue('Segundo de prueba');
+  await expect(page.getByLabel('Mis pasos para un momento difícil · nota 1')).toHaveValue(
+    'Segundo de prueba',
+  );
   await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado');
   await page.goto('/#/crisis');
   await expect(page.getByRole('heading', { name: 'Segundo de prueba', exact: true })).toBeVisible();
   await page.goto('/#/skills/pros-contras');
-  await page.getByRole('button', { name: 'Preparar mis preferencias' }).click();
+  await page.getByRole('button', { name: 'Guardar notas para esta guía' }).click();
   await page
     .getByLabel('Mis recordatorios', { exact: true })
     .fill('Una acción de prueba\nOtra idea');
   await page.getByLabel('Ventajas de una alternativa segura').fill('Puedo esperar para decidir');
   await page.getByLabel('Mis notas no reemplazan las precauciones de la guía.').check();
-  await page.getByRole('button', { name: 'Guardar mis preferencias' }).click();
+  await page.getByRole('button', { name: 'Guardar mis notas' }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await expect(
     page.getByRole('complementary').getByText('Puedo esperar para decidir', { exact: true }),
@@ -59,20 +61,24 @@ test('T015/017: bloqueo y cambios coordinados entre pestañas; sin envío de con
   await other.getByRole('button', { name: 'Desbloquear mi plan', exact: true }).click();
   await expect(other.getByRole('heading', { name: 'Mi plan personal', exact: true })).toBeVisible();
   await other.goto('/#/plan/earlySignals');
-  await other.getByRole('button', { name: 'Agregar nota' }).click();
-  await other.getByLabel('Señales tempranas · nota 1').fill('Borrador de otra pestaña');
+  await other.getByRole('button', { name: 'Escribir mi primera nota' }).click();
+  await other
+    .getByLabel('Cómo noto que empieza a ser difícil · nota 1')
+    .fill('Borrador de otra pestaña');
   await page.goto('/#/plan/earlySignals');
-  await page.getByRole('button', { name: 'Agregar nota' }).click();
-  await page.getByLabel('Señales tempranas · nota 1').fill('Guardado ganador');
+  await page.getByRole('button', { name: 'Escribir mi primera nota' }).click();
+  await page.getByLabel('Cómo noto que empieza a ser difícil · nota 1').fill('Guardado ganador');
   await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado');
   await other.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(other.getByRole('alert')).toContainText('Hay cambios guardados');
-  await expect(other.getByLabel('Señales tempranas · nota 1')).toHaveValue(
+  await expect(other.getByLabel('Cómo noto que empieza a ser difícil · nota 1')).toHaveValue(
     'Borrador de otra pestaña',
   );
   await page.getByRole('button', { name: 'Bloquear', exact: true }).click();
-  await expect(other.getByRole('heading', { name: 'Abre tu plan', exact: true })).toBeVisible();
+  await expect(
+    other.getByRole('heading', { name: 'Desbloquear mi plan', exact: true }),
+  ).toBeVisible();
   await expect(other.locator('textarea')).toHaveCount(0);
   expect(requests).toEqual([]);
 });
@@ -87,7 +93,7 @@ test('T009/010: impresión solo explícita y sin contactos ni diario por defecto
   await page.getByRole('button', { name: 'Preparar vista de impresión' }).click();
   await expect(page.locator('#print-plan')).toBeVisible();
   await expect(page.getByLabel(/Incluir contactos personales/)).not.toBeChecked();
-  await expect(page.locator('#print-plan')).not.toContainText('Mi red de apoyo');
+  await expect(page.locator('#print-plan')).not.toContainText('Mis contactos');
   await page.emulateMedia({ media: 'print' });
   expect(await page.locator('#print-plan').isVisible()).toBe(true);
   await page.emulateMedia({ media: 'screen' });
@@ -142,8 +148,10 @@ test('T007/011: precache parcial y actualización bloqueada por crisis en otra p
   const crisis = await context.newPage();
   await crisis.goto('/#/crisis');
   await expect(crisis.getByRole('heading', { name: 'Solo el siguiente paso.' })).toBeVisible();
-  await crisis.getByRole('link', { name: 'Probar STOP' }).click();
-  await expect(crisis.getByRole('heading', { name: 'STOP', exact: true })).toBeVisible();
+  await crisis.getByRole('link', { name: 'Hacer una pausa antes de actuar' }).click();
+  await expect(
+    crisis.getByRole('heading', { name: 'Hacer una pausa antes de actuar', exact: true }),
+  ).toBeVisible();
   const original = await readFile('dist/sw.js', 'utf8');
   try {
     await writeFile(
@@ -171,7 +179,9 @@ test('T007/011: precache parcial y actualización bloqueada por crisis en otra p
       });
     });
     expect(allowed).toBe(false);
-    await expect(crisis.getByRole('heading', { name: 'STOP', exact: true })).toBeVisible();
+    await expect(
+      crisis.getByRole('heading', { name: 'Hacer una pausa antes de actuar', exact: true }),
+    ).toBeVisible();
     await crisis.close();
     await page.getByRole('button', { name: 'Comprobar descarga offline' }).click();
     await expect(page.getByRole('button', { name: 'Actualizar ahora' })).toBeVisible();

@@ -94,3 +94,7 @@ PR#2 integrada en a1925e115ba138b7a0071426db73e593f956b1b5. CI38902729012 y38903
 ## 2026-10-16: desbloqueo de bóveda histórica
 
 Reproducido INVALID_FILE por serialización de propiedades opcionales undefined. Corrección y compatibilidad autenticada, con fixture sintética del formato anterior, en [registro](incidents/2026-10-16-vault-unlock.md).34 unitarias,14 E2E y build aprobados; publicación de corrección en curso.
+
+## 2026-10-17: primer uso y lenguaje cotidiano
+
+Implementación autorizada de las auditorías UX: propósito emocional explícito, ayuda sin registro, guías descriptivas, contactos frente a líneas de atención y plan agrupado. Registro de cambios y límites en [implementación](ux/2026-10-17-implementation.md).34 unitarias,17 E2E raíz y2 E2E bajo/refugio/ aprobados; build, formato y diff correctos. Nuevos recorridos comprueban ayuda sin frase/consentimiento, estado inexistente/bloqueado, primera nota con foco,320px con letra ampliada/axe y recuperación de datos guardados. Despliegue remoto de esta revisión pendiente al redactar este registro.

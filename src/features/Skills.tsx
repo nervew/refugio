@@ -12,30 +12,31 @@ export function Skills() {
   return (
     <>
       <PageTitle
-        eyebrow="Tus herramientas"
-        description="No hay una forma correcta de sentirte. Prueba lo que te resulte cómodo; puedes cambiar de opción cuando quieras."
+        eyebrow="A tu ritmo"
+        description="Puedes probar una sola guía, sin seguir un orden. Elige lo que te resulte cómodo y cambia de opción cuando quieras."
       >
-        Un recurso para este momento
+        Guías paso a paso
       </PageTitle>
       <div className="skills-grid">
-        {skills.map((skill, index) => (
+        {skills.map((skill) => (
           <SafeLink to={`/skills/${skill.id}`} className="skill-card" key={skill.id}>
-            <span className="skill-symbol" aria-hidden="true">
-              {String(index + 1).padStart(2, '0')}
-            </span>
             <Leaf size={23} aria-hidden="true" />
             <h2>{skill.title}</h2>
-            <p>{skill.short}</p>
+            <p>{skill.when}</p>
             <span className="card-link">
-              Explorar <ArrowRight size={18} aria-hidden="true" />
+              Ver guía <ArrowRight size={18} aria-hidden="true" />
             </span>
           </SafeLink>
         ))}
       </div>
-      <p className="subtle">
-        Contenido de evaluación en revisión profesional. Las guías no sustituyen terapia ni atención
-        urgente.
-      </p>
+      <details className="section-space">
+        <summary>Sobre estas guías</summary>
+        <p>
+          Estas guías adaptan herramientas de la terapia dialéctico-conductual (DBT). No necesitas
+          conocer esa terapia para usarlas. Esta adaptación está en evaluación y revisión
+          profesional; no sustituye terapia ni atención urgente.
+        </p>
+      </details>
     </>
   );
 }
@@ -43,7 +44,7 @@ export function SkillDetail() {
   const { skillId = '' } = useParams();
   const skill = getSkill(skillId);
   const [query] = useSearchParams();
-  const { data } = useVault();
+  const { data, status } = useVault();
   const [step, setStep] = useState(() => guideProgress.get(skillId)?.step ?? -1);
   const [editing, setEditing] = useState(false);
   const [paused, setPaused] = useState(() => guideProgress.get(skillId)?.paused ?? false);
@@ -53,8 +54,8 @@ export function SkillDetail() {
   if (!skill)
     return (
       <>
-        <PageTitle>Habilidad no disponible</PageTitle>
-        <SafeLink to="/skills">Volver a habilidades</SafeLink>
+        <PageTitle>Guía no disponible</PageTitle>
+        <SafeLink to="/skills">Volver a guías</SafeLink>
       </>
     );
   const pref = data?.skillPreferences.find((p) => p.skillId === skill.id);
@@ -62,11 +63,14 @@ export function SkillDetail() {
   return (
     <section className="guide-page">
       <SafeLink to={query.get('from') === 'crisis' ? '/crisis' : '/skills'} className="back-link">
-        ← {query.get('from') === 'crisis' ? 'Mi siguiente paso' : 'Habilidades'}
+        ← {query.get('from') === 'crisis' ? 'Mi siguiente paso' : 'Guías'}
       </SafeLink>
       <PageTitle eyebrow="A tu ritmo" description={skill.goal}>
         {skill.title}
       </PageTitle>
+      {skill.technicalName && (
+        <p className="subtle">Nombre de referencia: {skill.technicalName}.</p>
+      )}
       <div className="guide-columns">
         <section className="panel guide-card">
           {step < 0 ? (
@@ -122,7 +126,7 @@ export function SkillDetail() {
                   </button>
                 ) : (
                   <SafeLink to="/skills" className="button primary">
-                    Elegir otra herramienta
+                    Elegir otra guía
                   </SafeLink>
                 )}
                 <button className="text-button" onClick={() => setPaused(!paused)}>
@@ -191,12 +195,18 @@ export function SkillDetail() {
           )}
           {data && query.get('from') !== 'crisis' ? (
             <button className="text-button" onClick={() => setEditing(true)}>
-              <Bookmark size={17} aria-hidden="true" /> Preparar mis preferencias
+              <Bookmark size={17} aria-hidden="true" /> Guardar notas para esta guía
             </button>
           ) : query.get('from') === 'crisis' ? (
-            <p className="subtle">Puedes preparar tus preferencias después, con calma.</p>
+            <p className="subtle">Puedes preparar tus notas después, con calma.</p>
+          ) : status === 'absent' ? (
+            <SafeLink to="/unlock">Crear un plan para guardar mis notas</SafeLink>
+          ) : status === 'locked' ? (
+            <SafeLink to="/unlock">Desbloquear mi plan para ver mis notas</SafeLink>
           ) : (
-            <SafeLink to="/unlock">Abrir mi personalización</SafeLink>
+            <p className="subtle">
+              No podemos acceder a tus notas en este navegador ahora. Puedes seguir usando la guía.
+            </p>
           )}
           <p className="subtle">Contenido en revisión profesional.</p>
         </aside>
@@ -300,7 +310,7 @@ function PreferenceEditor({ initial, onClose }: { initial: SkillPreference; onCl
       </Check>
       <div className="button-row">
         <button className="button primary" disabled={busy || !ack}>
-          Guardar mis preferencias
+          Guardar mis notas
         </button>
         <button
           type="button"

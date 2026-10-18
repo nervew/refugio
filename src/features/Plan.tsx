@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ArrowRight, LockKeyhole, Plus, ArrowUp, ArrowDown, Trash2 } from 'lucide-react';
 import { PageTitle, PrivateGate, PrivacyNote } from '../app/components';
@@ -7,6 +8,26 @@ import { newId, now } from '../domain/actions';
 import { vault } from '../security/vault';
 import { useReturnHomeAfterSave } from '../app/save-navigation';
 import { skills } from '../content/skills';
+const planGroups: { id: string; title: string; fields: PlanField[] }[] = [
+  {
+    id: 'help',
+    title: 'Lo que me ayuda',
+    fields: ['safetySteps', 'helpfulStrategies', 'unhelpfulStrategies'],
+  },
+  {
+    id: 'notice',
+    title: 'Lo que noto',
+    fields: [
+      'earlySignals',
+      'frequentEmotions',
+      'thoughts',
+      'bodySensations',
+      'impulses',
+      'vulnerabilities',
+      'triggers',
+    ],
+  },
+];
 export function Plan() {
   return (
     <PrivateGate>
@@ -21,7 +42,7 @@ function PlanOverview() {
     <>
       <PageTitle
         eyebrow="Preparar en calma"
-        description="No tienes que completar todo. Guarda lo que quieras recordar; puedes volver cuando tengas más espacio."
+        description="Tu lista de recordatorios, pasos y contactos para consultar cuando tus emociones se sientan difíciles de manejar. Todo es opcional."
       >
         Mi plan personal
       </PageTitle>
@@ -30,53 +51,74 @@ function PlanOverview() {
           <LockKeyhole size={16} aria-hidden="true" /> Solo visible con tu plan abierto
         </p>
         <SafeLink className="button secondary" to="/crisis">
-          Consultar en modo crisis <ArrowRight size={18} aria-hidden="true" />
+          Ver mis pasos para un momento difícil <ArrowRight size={18} aria-hidden="true" />
         </SafeLink>
       </div>
-      <div className="plan-grid">
-        {Object.entries(planFields).map(([key, [label, help]], index) => {
-          const count = data.plan[key as PlanField].length;
-          return (
-            <SafeLink to={`/plan/${key}`} className="plan-card" key={key}>
-              <span className="step-number">{String(index + 1).padStart(2, '0')}</span>
-              <div>
-                <h2>{label}</h2>
-                <p>{help}</p>
-                <span className="tag">
-                  {count
-                    ? `${count} ${count === 1 ? 'nota guardada' : 'notas guardadas'}`
-                    : 'Puedes dejarlo vacío'}
-                </span>
-              </div>
-              <ArrowRight size={19} aria-hidden="true" />
-            </SafeLink>
-          );
-        })}
-        <SafeLink to="/support" className="plan-card">
-          <span className="step-number">11</span>
-          <div>
-            <h2>Red de apoyo</h2>
-            <p>Personas cercanas y contactos alternativos.</p>
+      <section className="panel" aria-labelledby="plan-start">
+        <h2 id="plan-start">Puedes empezar con una sola idea</h2>
+        <p>
+          Escribe un paso que quieras recordar o añade un contacto. Puedes dejar el resto vacío y
+          volver cuando quieras.
+        </p>
+        <div className="button-row">
+          <SafeLink to="/plan/safetySteps" className="button primary">
+            Escribir un paso para recordar
+          </SafeLink>
+          <SafeLink to="/support" className="button secondary">
+            Añadir un contacto
+          </SafeLink>
+        </div>
+      </section>
+      {planGroups.map((group) => (
+        <section className="section-space" key={group.id} aria-labelledby={`plan-${group.id}`}>
+          <h2 id={`plan-${group.id}`}>{group.title}</h2>
+          <div className="plan-grid">
+            {group.fields.map((key) => {
+              const [label, help] = planFields[key];
+              const count = data.plan[key].length;
+              return (
+                <SafeLink to={`/plan/${key}`} className="plan-card" key={key}>
+                  <div>
+                    <h3>{label}</h3>
+                    <p>{help}</p>
+                    <span className="tag">
+                      {count
+                        ? `${count} ${count === 1 ? 'nota guardada' : 'notas guardadas'}`
+                        : 'Opcional · puedes dejarlo vacío'}
+                    </span>
+                  </div>
+                  <ArrowRight size={19} aria-hidden="true" />
+                </SafeLink>
+              );
+            })}
           </div>
-          <ArrowRight aria-hidden="true" />
-        </SafeLink>
-        <SafeLink to="/support" className="plan-card">
-          <span className="step-number">12</span>
-          <div>
-            <h2>Contactos profesionales</h2>
-            <p>Tu profesional tratante y cómo acudir a él.</p>
-          </div>
-          <ArrowRight aria-hidden="true" />
-        </SafeLink>
-        <SafeLink to="/emergency" className="plan-card">
-          <span className="step-number">13</span>
-          <div>
-            <h2>Recursos de emergencia</h2>
-            <p>Ayuda por país y región; recursos personales separados.</p>
-          </div>
-          <ArrowRight aria-hidden="true" />
-        </SafeLink>
-      </div>
+        </section>
+      ))}
+      <section className="section-space" aria-labelledby="plan-people">
+        <h2 id="plan-people">A quién puedo acudir</h2>
+        <div className="plan-grid">
+          <SafeLink to="/support" className="plan-card">
+            <div>
+              <h3>Mis contactos</h3>
+              <p>
+                Personas de confianza y profesionales, si ya recibes atención. Puedes añadirlos
+                cuando quieras.
+              </p>
+            </div>
+            <ArrowRight aria-hidden="true" />
+          </SafeLink>
+          <SafeLink to="/emergency" className="plan-card">
+            <div>
+              <h3>Líneas de atención y urgencias</h3>
+              <p>
+                Consulta los recursos disponibles donde estás. No necesitas crear un plan para
+                verlos.
+              </p>
+            </div>
+            <ArrowRight aria-hidden="true" />
+          </SafeLink>
+        </div>
+      </section>
       <FavoriteSkills />
       <PrivacyNote />
     </>
@@ -105,7 +147,7 @@ function FavoriteSkills() {
         }
       }}
     >
-      <h2>Habilidades que quiero tener a mano</h2>
+      <h2>Guías que quiero tener a mano</h2>
       <p>
         Marca tus preferidas. La primera elegida será tu guía inicial si no preparaste pasos
         propios.
@@ -150,6 +192,10 @@ export function PlanSection() {
 }
 function SectionEditor({ field }: { field: PlanField }) {
   const returnHome = useReturnHomeAfterSave();
+  const [focusNote, setFocusNote] = useState<string | null>(null);
+  useEffect(() => {
+    if (focusNote) document.getElementById(`note-${focusNote}`)?.focus();
+  }, [focusNote]);
   const { data } = useVault();
   const { busy, run } = useAction();
   const { draft, setDraft, clean, changed } = useDraftState<PlanItem[]>(
@@ -191,10 +237,11 @@ function SectionEditor({ field }: { field: PlanField }) {
       <form onSubmit={save} className="form-stack">
         <p className="muted">
           Todo es opcional. Una idea breve por nota, máximo 500 caracteres.{' '}
-          {field === 'safetySteps' && 'Estos pasos aparecerán primero en modo crisis.'}
+          {field === 'safetySteps' &&
+            'Estos pasos aparecerán primero al consultar tu guía para un momento difícil.'}
         </p>
         {draft.length === 0 && (
-          <p className="empty-note">Todavía no hay notas. Puedes empezar con una sola idea.</p>
+          <p className="muted">Todavía no has añadido notas. Puedes empezar con una sola idea.</p>
         )}
         {draft.map((item, index) => (
           <div className="panel editable-note" key={item.id}>
@@ -243,16 +290,27 @@ function SectionEditor({ field }: { field: PlanField }) {
           type="button"
           className="button secondary"
           disabled={draft.length >= max}
-          onClick={() => setDraft([...draft, { id: newId(), text: '', order: draft.length }])}
+          onClick={() => {
+            const id = newId();
+            setDraft([...draft, { id, text: '', order: draft.length }]);
+            setFocusNote(id);
+          }}
         >
-          <Plus size={18} aria-hidden="true" /> Agregar nota
+          <Plus size={18} aria-hidden="true" />{' '}
+          {draft.length ? 'Agregar otra nota' : 'Escribir mi primera nota'}
         </button>
         {draft.length >= max && <p>Límite: {max} notas. No se borrarán notas automáticamente.</p>}
         <div className="save-row">
           <button className="button primary" disabled={busy}>
             {busy ? 'Guardando…' : 'Guardar y volver al inicio'}
           </button>
-          <span className="muted">{changed ? 'Cambios sin guardar' : 'Sección guardada'}</span>
+          <span className="muted">
+            {changed
+              ? 'Cambios sin guardar'
+              : draft.length
+                ? 'Cambios guardados'
+                : 'Aún no has añadido notas'}
+          </span>
         </div>
       </form>
       <PrivacyNote />

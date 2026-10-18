@@ -17,7 +17,8 @@
   flex: 1;
   min-width: 0;
 }
-.plan-card h2 {
+.plan-card h2,
+.plan-card h3 {
   font-size: 1.125rem;
   margin: 0 0 0.5rem;
 }
@@ -371,4 +372,10 @@ dialog::backdrop {
 }
 .app-shell:has(.help-bar) .site-footer {
   padding-bottom: 9rem;
+}
+
+.onboarding-help {
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
 }

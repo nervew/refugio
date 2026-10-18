@@ -35,13 +35,13 @@ function SupportList() {
     <>
       <PageTitle
         eyebrow="No tienes que hacerlo a solas"
-        description="Acuerda en calma cómo pedir apoyo. Si alguien no responde, puedes probar con otra persona."
+        description="Guarda personas a quienes quieras contactar en un momento difícil. Es opcional; no necesitas estar en terapia. Si alguien no responde, puedes probar con otra persona."
       >
-        Mi red de apoyo
+        Mis contactos
       </PageTitle>
       <div className="section-heading">
         <SafeLink to="/emergency" className="button secondary">
-          Ver emergencias
+          Ver líneas de atención
         </SafeLink>
         <button
           className="button primary"
@@ -61,8 +61,11 @@ function SupportList() {
         </button>
       </div>
       {contacts.length === 0 ? (
-        <EmptyState title="Aquí hay espacio para tu compañía">
-          <p>Agrega a alguien cercano o a tu profesional tratante cuando quieras.</p>
+        <EmptyState title="Aún no has añadido contactos">
+          <p>
+            Puedes añadir a alguien de confianza y, si tienes un profesional a quien acudir,
+            guardarlo también.
+          </p>
         </EmptyState>
       ) : (
         <div className="support-grid">
@@ -209,13 +212,13 @@ function ContactEditor({ contact, onClose }: { contact: Contact; onClose: () => 
         required
       />
       <label className="field">
-        Tipo de apoyo
+        Tipo de contacto
         <select
           value={draft.role}
           onChange={(e) => patch({ role: e.target.value as Contact['role'] })}
         >
           <option value="personal">Persona cercana</option>
-          <option value="professional">Profesional tratante</option>
+          <option value="professional">Profesional</option>
         </select>
       </label>
       <TextField
@@ -235,7 +238,8 @@ function ContactEditor({ contact, onClose }: { contact: Contact; onClose: () => 
         help="Incluye el código de país cuando lo conozcas. Ejemplo ficticio: +57 300 000 0000."
       />
       <TextField
-        label="Disponibilidad acordada (opcional)"
+        label="Cuándo puedo contactar a esta persona (opcional)"
+        help="Si lo sabes, anota los horarios o lo que hayan acordado. Guardarlo no confirma su disponibilidad."
         value={draft.availabilityText ?? ''}
         onChange={(availabilityText) => patch({ availabilityText })}
       />

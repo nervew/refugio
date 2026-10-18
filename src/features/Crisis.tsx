@@ -5,8 +5,9 @@ import { HelpBar, Dialog } from '../app/components';
 import { getSkill } from '../content/skills';
 import { phoneDestination } from '../domain/actions';
 import { MessageComposer } from './Support';
+import { planAccess } from '../app/plan-access';
 export function Crisis() {
-  const { data } = useVault();
+  const { data, status } = useVault();
   const [index, setIndex] = useState(0);
   const [messageOpen, setMessageOpen] = useState(false);
   const prepared = [...(data?.plan.safetySteps ?? [])].sort((a, b) => a.order - b.order);
@@ -23,12 +24,16 @@ export function Crisis() {
     <section className="crisis-page">
       <div className="crisis-top">
         <span className="eyebrow">
-          <HeartHandshake size={19} aria-hidden="true" /> Estoy aquí, un paso a la vez
+          <HeartHandshake size={19} aria-hidden="true" /> Una guía para un momento difícil
         </span>
-        <SafeLink to="/">Salir del modo crisis</SafeLink>
+        <SafeLink to="/">Volver al inicio</SafeLink>
       </div>
       <h1 tabIndex={-1}>Solo el siguiente paso.</h1>
       <p className="lede">No tienes que resolver todo en este momento.</p>
+      <p>
+        Estos son pasos de la app para cuando tus emociones te sobrepasan. No hay una persona
+        respondiendo aquí.
+      </p>
       <div className="crisis-layout">
         <section className="crisis-step">
           <span className="step-orb" aria-hidden="true">
@@ -58,18 +63,18 @@ export function Crisis() {
               </button>
             ) : (
               <SafeLink className="button primary" to={`/skills/${skill.id}?from=crisis`}>
-                {current ? 'Seguir con una habilidad' : `Probar ${skill.title}`}{' '}
+                {current ? `Abrir guía: ${skill.title}` : skill.title}{' '}
                 <ArrowRight size={19} aria-hidden="true" />
               </SafeLink>
             )}
             <SafeLink to="/skills" className="text-button">
-              Elegir otra habilidad
+              Elegir otra guía
             </SafeLink>
           </div>
           {!data && (
             <p className="muted">
-              Tu plan personal está cerrado. <SafeLink to="/unlock">Puedes desbloquearlo</SafeLink>{' '}
-              o continuar con estos pasos.
+              {planAccess(status).description}{' '}
+              {status !== 'loading' && <SafeLink to="/unlock">{planAccess(status).label}</SafeLink>}
             </p>
           )}
           {data && prepared.length === 0 && (
@@ -106,14 +111,24 @@ export function Crisis() {
               <p>
                 Puedes pedir a alguien cercano que te acompañe.{' '}
                 {data
-                  ? 'Tu red de apoyo todavía está vacía.'
-                  : 'Abre tu plan para ver los contactos que preparaste.'}
+                  ? 'Todavía no has guardado contactos en tu plan.'
+                  : status === 'locked'
+                    ? 'Desbloquea tu plan para consultar tus contactos guardados.'
+                    : status === 'absent'
+                      ? 'Si quieres guardar tus propios contactos, puedes crear un plan después.'
+                      : 'No podemos comprobar tus contactos guardados mientras no se pueda acceder al plan.'}
               </p>
-              <SafeLink to="/support" className="button secondary">
-                Ver mi red de apoyo
-              </SafeLink>
+              {(status === 'locked' || status === 'unlocked') && (
+                <SafeLink to="/support" className="button secondary">
+                  Ver mis contactos
+                </SafeLink>
+              )}
             </>
           )}
+          <p>
+            <SafeLink to="/emergency">Ver líneas de atención</SafeLink>. No necesitas crear ni abrir
+            un plan.
+          </p>
         </aside>
       </div>
       <div className="danger-note">
@@ -123,7 +138,7 @@ export function Crisis() {
           acompañe. Refugio no llama ni avisa a nadie por sí solo.
         </p>
         <SafeLink to="/emergency">
-          Abrir recursos de emergencia <ArrowRight size={17} aria-hidden="true" />
+          Ver líneas de atención y emergencias <ArrowRight size={17} aria-hidden="true" />
         </SafeLink>
       </div>
       <HelpBar />

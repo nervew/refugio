@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { SafeLink, useVault } from '../app/context';
 import { PageTitle } from '../app/components';
+import { planAccess } from '../app/plan-access';
 export function Home() {
   const session = useVault();
   return (
@@ -26,14 +27,15 @@ export function Home() {
             <br className="desktop-break" /> todo <em>ahora.</em>
           </h1>
           <p className="lede">
-            Un paso pequeño también cuenta. Aquí puedes encontrar tus herramientas, tu plan y las
-            personas que te acompañan.
+            Guías y recordatorios para momentos en que tus emociones te sobrepasan o te cuesta
+            decidir qué hacer. Puedes consultar una guía ahora o preparar tu plan para después.
           </p>
           <SafeLink to="/crisis" className="button primary crisis-button">
             <HeartHandshake size={22} aria-hidden="true" /> Necesito apoyo ahora{' '}
             <ArrowRight size={22} aria-hidden="true" />
           </SafeLink>
-          <p className="subtle">Sin preguntas. A tu ritmo. Un paso a la vez.</p>
+          <p className="subtle">Abre una guía de la app, sin crear un plan ni escribir tu frase.</p>
+          <SafeLink to="/emergency">Ver líneas de atención y emergencias</SafeLink>
         </section>
         <div className="refuge-art" aria-hidden="true">
           <div className="art-sun" />
@@ -57,30 +59,29 @@ export function Home() {
               <BookOpen aria-hidden="true" />
             </span>
             <h3>Mi plan personal</h3>
-            <p>Lo que te ayuda, preparado por ti para cuando lo necesites.</p>
+            <p>Recordatorios, pasos y contactos que preparas para consultar después.</p>
             <span className="card-link">
-              {session.data ? 'Abrir mi plan' : 'Preparar mi plan'}{' '}
-              <ArrowRight size={18} aria-hidden="true" />
+              {planAccess(session.status).label} <ArrowRight size={18} aria-hidden="true" />
             </span>
           </SafeLink>
           <SafeLink to="/skills" className="feature-card">
             <span className="card-icon">
               <Leaf aria-hidden="true" />
             </span>
-            <h3>Mis herramientas</h3>
-            <p>Seis habilidades para atravesar un momento difícil.</p>
+            <h3>Guías paso a paso</h3>
+            <p>Puedes probar una guía y cambiar cuando quieras.</p>
             <span className="card-link">
-              Explorar habilidades <ArrowRight size={18} aria-hidden="true" />
+              Ver guías <ArrowRight size={18} aria-hidden="true" />
             </span>
           </SafeLink>
           <SafeLink to="/support" className="feature-card">
             <span className="card-icon">
               <UsersRound aria-hidden="true" />
             </span>
-            <h3>Mi red de apoyo</h3>
-            <p>Personas y profesionales a quienes puedes acudir.</p>
+            <h3>Mis contactos</h3>
+            <p>Tu lista de personas a quienes podrías llamar o escribir.</p>
             <span className="card-link">
-              Encontrar compañía <ArrowRight size={18} aria-hidden="true" />
+              Ver mis contactos <ArrowRight size={18} aria-hidden="true" />
             </span>
           </SafeLink>
         </div>
@@ -97,25 +98,26 @@ export function Home() {
       </div>
       <p className="privacy-note home-privacy">
         <ShieldCheck size={18} aria-hidden="true" /> Sin cuenta. Tu plan personal se guarda cifrado
-        en este dispositivo.
+        en este navegador.
       </p>
     </>
   );
 }
 export function Welcome() {
+  const session = useVault();
   return (
     <section className="narrow">
       <PageTitle
         eyebrow="Bienvenido a Refugio"
-        description="Un espacio para preparar tus herramientas en calma y consultarlas cuando se vuelve difícil."
+        description="Guías y recordatorios para momentos en que tus emociones te sobrepasan o te cuesta decidir qué hacer."
       >
         Un paso a la vez
       </PageTitle>
       <div className="panel prose">
         <h2>Tu plan, a tu manera</h2>
         <p>
-          Puedes explorar las guías sin registro. Para preparar tu plan personal, crearás una frase
-          secreta que protege tus datos en este navegador.
+          Puedes consultar una guía ahora o preparar tu plan para después. No necesitas registrarte.
+          Tu plan se guarda en este navegador y se abre con tu frase secreta.
         </p>
         <p>
           El navegador puede borrar almacenamiento. Conserva una copia cifrada y su frase; no
@@ -130,13 +132,14 @@ export function Welcome() {
           ficticios.
         </p>
         <div className="button-row">
-          <SafeLink to="/unlock" className="button primary">
-            Preparar mi plan
+          <SafeLink to="/plan" className="button primary">
+            {planAccess(session.status).label}
           </SafeLink>
           <SafeLink to="/skills" className="button secondary">
-            Explorar habilidades
+            Ver guías paso a paso
           </SafeLink>
           <SafeLink to="/crisis">Necesito apoyo ahora</SafeLink>
+          <SafeLink to="/emergency">Ver líneas de atención y emergencias</SafeLink>
         </div>
       </div>
     </section>

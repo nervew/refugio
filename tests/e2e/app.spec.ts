@@ -7,7 +7,7 @@ async function create(page: Page) {
   await page.getByLabel('Repite la frase secreta').fill(phrase);
   await page.getByLabel('Confirmo que tengo 18 años o más.').check();
   await page.getByLabel(/Entiendo que este plan puede contener/).check();
-  await page.getByRole('button', { name: 'Crear mi plan cifrado' }).click();
+  await page.getByRole('button', { name: 'Crear mi plan' }).click();
   await expect(page.getByRole('heading', { name: 'Mi plan personal', exact: true })).toBeVisible();
 }
 async function unlock(page: Page) {
@@ -24,7 +24,7 @@ test('T003/006: crisis en una acción, seis guías y ausencia de números pendie
   await page.goto('/');
   await page.getByRole('link', { name: 'Necesito apoyo ahora', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Solo el siguiente paso.' })).toBeVisible();
-  await page.getByRole('link', { name: 'Probar STOP' }).click();
+  await page.getByRole('link', { name: 'Hacer una pausa antes de actuar' }).click();
   await page.getByRole('button', { name: 'Empezar paso a paso' }).click();
   await expect(
     page.getByRole('heading', { name: 'Pausa la acción un momento, si estás a salvo.' }),
@@ -43,9 +43,11 @@ test('T001/005/008/015: editar, persistir, contactar y bloquear sin datos legibl
   page,
 }) => {
   await create(page);
-  await page.getByRole('link', { name: /Señales tempranas/ }).click();
-  await page.getByRole('button', { name: 'Agregar nota' }).click();
-  await page.getByLabel('Señales tempranas · nota 1').fill('CANARIO PRIVADO DE PRUEBA');
+  await page.getByRole('link', { name: /Cómo noto que empieza a ser difícil/ }).click();
+  await page.getByRole('button', { name: 'Escribir mi primera nota' }).click();
+  await page
+    .getByLabel('Cómo noto que empieza a ser difícil · nota 1')
+    .fill('CANARIO PRIVADO DE PRUEBA');
   await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado en este dispositivo');
   await expect(page).toHaveURL(/\/#\/$/);
@@ -86,7 +88,7 @@ test('T001/005/008/015: editar, persistir, contactar y bloquear sin datos legibl
   await page.reload();
   await unlock(page);
   await page.goto('/#/plan/earlySignals');
-  await expect(page.getByLabel('Señales tempranas · nota 1')).toHaveValue(
+  await expect(page.getByLabel('Cómo noto que empieza a ser difícil · nota 1')).toHaveValue(
     'CANARIO PRIVADO DE PRUEBA',
   );
 });
@@ -103,14 +105,14 @@ test('T004: reflexión voluntaria guarda intensidades ausentes sin diagnóstico'
   await page.goto('/#/reflections');
   await expect(page.getByText('Pedir compañía fue útil.', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Ver y editar reflexión' }).click();
-  await expect(page.getByLabel('Intensidad antes')).toHaveValue('');
-  await expect(page.getByLabel('Intensidad después')).toHaveValue('');
+  await expect(page.getByLabel('Malestar antes de lo que probé (opcional)')).toHaveValue('');
+  await expect(page.getByLabel('Malestar después de lo que probé (opcional)')).toHaveValue('');
 });
 test('T009/012: descargar, borrar y restaurar con confirmación', async ({ page }, testInfo) => {
   await create(page);
   await page.goto('/#/plan/safetySteps');
-  await page.getByRole('button', { name: 'Agregar nota' }).click();
-  await page.getByLabel('Mis próximos pasos · nota 1').fill('Mi paso de prueba');
+  await page.getByRole('button', { name: 'Escribir mi primera nota' }).click();
+  await page.getByLabel('Mis pasos para un momento difícil · nota 1').fill('Mi paso de prueba');
   await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await page.goto('/#/backup');
   const downloadEvent = page.waitForEvent('download');
@@ -150,7 +152,7 @@ test('T007: PWA reinicia offline con guías y plan previamente guardado', async 
   });
   await context.setOffline(true);
   await page.reload();
-  await page.getByRole('link', { name: 'Mi espacio', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'Abrir mi plan', exact: true }).click();
   await page.getByLabel('Frase secreta', { exact: true }).fill(phrase);
   await page.getByRole('button', { name: 'Desbloquear mi plan', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Mi plan personal', exact: true })).toBeVisible();

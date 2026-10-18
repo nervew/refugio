@@ -5,6 +5,7 @@ import { PageTitle, Check, TextField } from '../app/components';
 import { SafeLink, useAction, useVault } from '../app/context';
 import { vault } from '../security/vault';
 import { LocalError } from '../domain/errors';
+import { planAccess } from '../app/plan-access';
 export function Unlock({ embedded = false }: { embedded?: boolean }) {
   const session = useVault();
   const creating = session.status === 'absent';
@@ -41,19 +42,26 @@ export function Unlock({ embedded = false }: { embedded?: boolean }) {
         eyebrow="Tu espacio personal"
         description={
           creating
-            ? 'Elige una frase que puedas recordar. No necesitas crear una cuenta.'
-            : 'Puedes seguir usando las guías sin abrir tus datos.'
+            ? 'No necesitas registrarte. Tu plan se guarda en este navegador y se abre con tu frase secreta.'
+            : planAccess(session.status).description
         }
       >
-        {creating ? 'Prepara tu refugio' : 'Abre tu plan'}
+        {creating ? 'Crea tu plan personal' : planAccess(session.status).label}
       </PageTitle>
+      <aside className="notice onboarding-help">
+        <SafeLink to="/crisis" className="button secondary">
+          Necesito apoyo ahora
+        </SafeLink>
+        <p>Abre una guía paso a paso de la app, sin crear un plan ni escribir tu frase.</p>
+        <SafeLink to="/emergency">Ver líneas de atención y emergencias</SafeLink>
+      </aside>
       {session.status === 'loading' ? (
         <p role="status">Comprobando almacenamiento…</p>
       ) : session.status === 'unavailable' ? (
         <div className="notice">
           <p>
-            No se puede acceder al almacenamiento. Usa un navegador compatible; la ayuda pública
-            sigue disponible.
+            No podemos acceder al almacenamiento de este navegador. No sabemos si hay un plan
+            guardado; esto no significa que se haya borrado. Puedes seguir usando las guías.
           </p>
           <button onClick={() => void vault.init()}>Volver a intentar</button>
         </div>
@@ -109,19 +117,20 @@ export function Unlock({ embedded = false }: { embedded?: boolean }) {
           )}
           <button className="button primary" disabled={busy || session.busy}>
             {busy
-              ? 'Abriendo tu espacio…'
+              ? creating
+                ? 'Creando mi plan…'
+                : 'Desbloqueando mi plan…'
               : creating
-                ? 'Crear mi plan cifrado'
+                ? 'Crear mi plan'
                 : 'Desbloquear mi plan'}
           </button>
         </form>
       )}
       <div className="button-row">
-        <SafeLink to="/crisis" className="button secondary">
-          Seguir con apoyo público
-        </SafeLink>
-        <SafeLink to="/backup">Restaurar una copia</SafeLink>
-        <SafeLink to="/settings">Frase olvidada y opciones</SafeLink>
+        <SafeLink to="/backup">¿Tienes una copia de Refugio? Restaurarla</SafeLink>
+        {session.status === 'locked' && (
+          <SafeLink to="/settings">Frase olvidada y opciones</SafeLink>
+        )}
       </div>
     </section>
   );

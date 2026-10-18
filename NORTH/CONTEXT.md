@@ -4,7 +4,7 @@
 
 - **Sprint:** `Implementación y depuración del MVP Refugio`.
 - **Objective:** `Implementar la aplicación según los18 SPECS y2 ADRs`.
-- **P1:** `Funcionalidad MVP y depuración local` — implementada;31 pruebas Vitest,12 E2E raíz y2 E2E de subruta aprobados.
+- **P1:** `Funcionalidad MVP y depuración local` — implementada;34 pruebas Vitest,17 E2E raíz y2 E2E de subruta aprobados.
 - **P2:** `Aceptación para piloto público` — pendiente de gates externos; no confundir con build técnico.
 
 ## State
@@ -21,7 +21,8 @@
 - Fuente de hosting versionada en repo privado Sites (/workspace/sites/refugio); fuente enviada además a GitHub mediante PR #1.
 - GitHub Pages activo: run38897897430 reejecutado con éxito. Prueba real de URL run38899623865: crear/guardar/recargar/desbloquear aprobada en Chromium escritorio/móvil y WebKit. Usuario reporta botón sin respuesta; falta navegador y estado del botón para reproducir.
 - UX: guardar contenido vuelve al inicio tras éxito; paleta salvia/durazno/lavanda en temas claro/oscuro. PR#2 integrada; Pages38903025400 publicado.31 unitarias,13 E2E raíz,2 subruta y6 pruebas de URL pública (38903297999) aprobadas.
-- Incidencia desbloqueo: reproducido INVALID_FILE por undefined en campos opcionales al cifrar; serializador corregido y lectura histórica autenticada añadida.34 unitarias y14 E2E aprobados; publicación en curso. Ver docs/incidents/2026-10-16-vault-unlock.md.
+- Incidencia desbloqueo: reproducido INVALID_FILE por undefined en campos opcionales al cifrar; serializador corregido y lectura histórica autenticada añadida.34 unitarias y14 E2E aprobados. PR#3 integrada644e7c2; Pages38908232209 publicado;9 pruebas públicas38908488995 aprobadas, incluida recuperación histórica en3 navegadores. Ver docs/incidents/2026-10-16-vault-unlock.md.
+- UX de primer uso implementado: propósito emocional, guías descriptivas, ayuda sin registro, estados claros y plan agrupado.34 unitarias,17 E2E raíz y2 de subruta aprobados; publicación en curso. Ver docs/ux/2026-10-17-implementation.md.
 - Evidencia: `docs/verification.md`; comandos reales en `.claude/rules/verify.md`.
 
 ## Next
