@@ -15,6 +15,28 @@ export function Settings({ appearance }: { appearance: Appearance }) {
   const [secret, setSecret] = useState('');
   const [repeat, setRepeat] = useState('');
   const [deleteAck, setDeleteAck] = useState(false);
+  const [checkingOffline, setCheckingOffline] = useState(false);
+  const [offlineResult, setOfflineResult] = useState('');
+  const [canRepair, setCanRepair] = useState(false);
+  async function checkOffline(repair = false) {
+    setCheckingOffline(true);
+    setOfflineResult(
+      repair ? 'Descargando los archivos que faltan…' : 'Comprobando archivos guardados…',
+    );
+    try {
+      const result = await pwa.refresh(repair);
+      setCanRepair(!result.ready && !result.unavailable);
+      setOfflineResult(
+        result.unavailable
+          ? 'No pudimos comprobar la descarga. Abre Refugio con conexión, espera unos segundos y vuelve a intentarlo. Este navegador puede limitar el almacenamiento sin conexión.'
+          : result.ready
+            ? `Comprobación terminada: ${result.total ? `${result.total} de ${result.total} archivos disponibles en este navegador.` : 'El navegador confirma los archivos guardados.'} Puedes abrir las guías sin conexión. Esto no comprueba llamadas ni sitios externos.`
+            : `Descarga incompleta: faltan ${result.missing} de ${result.total} archivos. Con conexión puedes volver a descargar lo que falta.`,
+      );
+    } finally {
+      setCheckingOffline(false);
+    }
+  }
   const [storage, setStorage] = useState('Todavía no solicitado');
   async function preference(key: 'theme' | 'textSize' | 'reducedMotionOverride', value: string) {
     await run(async () => {
@@ -83,9 +105,27 @@ export function Settings({ appearance }: { appearance: Appearance }) {
             La descarga inicial requiere red. El navegador puede borrar datos, incluso con la app
             instalada. Usa copias cifradas.
           </p>
-          <button className="button secondary" onClick={() => pwa.refresh()}>
-            Comprobar descarga offline
+          <button
+            className="button secondary"
+            disabled={checkingOffline}
+            onClick={() => void checkOffline()}
+          >
+            {checkingOffline ? 'Comprobando descarga…' : 'Comprobar descarga offline'}
           </button>
+          {offlineResult && (
+            <p role="status" aria-live="polite" aria-label="Resultado de la descarga">
+              {offlineResult}
+            </p>
+          )}
+          {canRepair && (
+            <button
+              className="button secondary"
+              disabled={checkingOffline || !pwa.online}
+              onClick={() => void checkOffline(true)}
+            >
+              Descargar los archivos que faltan
+            </button>
+          )}
           <p>Persistencia: {storage}</p>
           <button
             onClick={() =>

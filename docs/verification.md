@@ -98,3 +98,8 @@ Reproducido INVALID_FILE por serialización de propiedades opcionales undefined.
 ## 2026-10-17: primer uso y lenguaje cotidiano
 
 Implementación autorizada de las auditorías UX: propósito emocional explícito, ayuda sin registro, guías descriptivas, contactos frente a líneas de atención y plan agrupado. Registro de cambios y límites en [implementación](ux/2026-10-17-implementation.md).34 unitarias,17 E2E raíz y2 E2E bajo/refugio/ aprobados; build, formato y diff correctos. Nuevos recorridos comprueban ayuda sin frase/consentimiento, estado inexistente/bloqueado, primera nota con foco,320px con letra ampliada/axe y recuperación de datos guardados. Despliegue remoto de esta revisión pendiente al redactar este registro.
+
+
+## 2026-10-18 · Offline y plan de crisis
+
+Tipos, 39 unitarias/integración, 21 E2E raíz y 3 de subruta aprobados. Simulada pérdida de archivo público de precarga: detectado, reparado con conexión y reabierto sin red. Plan de seis secciones personalizado y con contactos opcionales, descarga de texto y PDF sintético A4 verificados; sin cambiar formato cifrado. Ver [detalle de evidencia](ux/2026-10-18-offline-and-crisis-plan.md). Los gates externos siguen pendientes.

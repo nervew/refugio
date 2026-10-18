@@ -7,6 +7,7 @@ import { planFields, type PlanField, type PlanItem } from '../domain/model';
 import { newId, now } from '../domain/actions';
 import { vault } from '../security/vault';
 import { useReturnHomeAfterSave } from '../app/save-navigation';
+import { CrisisPreparation } from './CrisisPreparation';
 import { skills } from '../content/skills';
 const planGroups: { id: string; title: string; fields: PlanField[] }[] = [
   {
@@ -69,6 +70,7 @@ function PlanOverview() {
           </SafeLink>
         </div>
       </section>
+      <CrisisPreparation />
       {planGroups.map((group) => (
         <section className="section-space" key={group.id} aria-labelledby={`plan-${group.id}`}>
           <h2 id={`plan-${group.id}`}>{group.title}</h2>

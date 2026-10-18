@@ -1,0 +1,16 @@
+#print-plan p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+#print-plan h4 {
+  margin-top: 1.5rem;
+}
+@media print {
+  #print-plan > section:has(section) {
+    break-inside: auto;
+  }
+  #print-plan h3,
+  #print-plan h4 {
+    break-after: avoid;
+  }
+}

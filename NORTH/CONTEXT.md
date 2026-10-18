@@ -4,7 +4,7 @@
 
 - **Sprint:** `Implementación y depuración del MVP Refugio`.
 - **Objective:** `Implementar la aplicación según los18 SPECS y2 ADRs`.
-- **P1:** `Funcionalidad MVP y depuración local` — implementada;35 pruebas Vitest y19 E2E raíz y2 de subruta aprobados.
+- **P1:** `Funcionalidad MVP y depuración local` — implementada;39 pruebas Vitest y21 E2E raíz y3 de subruta aprobados.
 - **P2:** `Aceptación para piloto público` — pendiente de gates externos; no confundir con build técnico.
 
 ## State
@@ -23,7 +23,8 @@
 - UX: guardar contenido vuelve al inicio tras éxito; paleta salvia/durazno/lavanda en temas claro/oscuro. PR#2 integrada; Pages38903025400 publicado.31 unitarias,13 E2E raíz,2 subruta y6 pruebas de URL pública (38903297999) aprobadas.
 - Incidencia desbloqueo: reproducido INVALID_FILE por undefined en campos opcionales al cifrar; serializador corregido y lectura histórica autenticada añadida.34 unitarias y14 E2E aprobados. PR#3 integrada644e7c2; Pages38908232209 publicado;9 pruebas públicas38908488995 aprobadas, incluida recuperación histórica en3 navegadores. Ver docs/incidents/2026-10-16-vault-unlock.md.
 - UX de primer uso implementado: propósito emocional, guías descriptivas, ayuda sin registro, estados claros y plan agrupado.PR#4 integrada2f5edbf, Pages39087995029 publicado;34 unitarias,17 E2E raíz,2 de subruta y12 pruebas públicas39088094503 aprobadas. Ver docs/ux/2026-10-17-implementation.md.
-- Directorio ampliado a Medellín/Cali/Frankfurt/Ámsterdam con fuentes por tarjeta y país cifrado; señales reformuladas como «Cuando me cuesta manejar mis emociones». Ver docs/emergency-cities.md; publicación pendiente.
+- Directorio ampliado a Medellín/Cali/Frankfurt/Ámsterdam con fuentes por tarjeta y país cifrado; señales reformuladas como «Cuando me cuesta manejar mis emociones». Ver docs/emergency-cities.md. PR#5 integrada7591e28; Pages39089884920 y pruebas públicas39089978382 aprobados.
+- Ajustes offline: resultado explícito, conteo único, detección y reparación de precarga. Plan legible de seis secciones con notas personales, contactos opcionales y líneas por lugar; PDF vía diálogo del navegador y descarga de texto.39 unitarias,21 E2E y3 subruta aprobados; publicación pendiente. Ver docs/ux/2026-10-18-offline-and-crisis-plan.md.
 - Evidencia: `docs/verification.md`; comandos reales en `.claude/rules/verify.md`.
 
 ## Next

@@ -1,5 +1,5 @@
 /// <reference lib="webworker" />
-import { clientsClaim } from 'workbox-core';
+import { cacheNames, clientsClaim } from 'workbox-core';
 import {
   precacheAndRoute,
   createHandlerBoundToURL,
@@ -29,16 +29,41 @@ async function safeToUpdate(client: Client): Promise<boolean> {
   });
 }
 self.addEventListener('message', (event) => {
-  if (event.data?.type === 'CHECK_CACHE')
+  if (event.data?.type === 'CHECK_CACHE' || event.data?.type === 'REPAIR_CACHE')
     event.waitUntil(
       (async () => {
+        const cache = await caches.open(cacheNames.precache);
+        const keys = [
+          ...new Set(
+            manifest.map((entry) =>
+              getCacheKeyForURL(typeof entry === 'string' ? entry : entry.url),
+            ),
+          ),
+        ];
         const checks = await Promise.all(
-          manifest.map(async (entry) => {
-            const key = getCacheKeyForURL(typeof entry === 'string' ? entry : entry.url);
-            return Boolean(key && (await caches.match(key)));
+          keys.map(async (key) => {
+            if (!key) return false;
+            if (await cache.match(key)) return true;
+            if (event.data.type !== 'REPAIR_CACHE') return false;
+            try {
+              const response = await fetch(key, {
+                cache: 'reload',
+                credentials: 'same-origin',
+                signal: AbortSignal.timeout(8000),
+              });
+              if (!response.ok || response.redirected) return false;
+              await cache.put(key, response);
+              return true;
+            } catch {
+              return false;
+            }
           }),
         );
-        event.ports[0]?.postMessage({ ready: checks.length > 0 && checks.every(Boolean) });
+        event.ports[0]?.postMessage({
+          ready: checks.length > 0 && checks.every(Boolean),
+          total: checks.length,
+          missing: checks.filter((present) => !present).length,
+        });
       })(),
     );
   if (event.data?.type === 'REQUEST_ACTIVATION')

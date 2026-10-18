@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { vault } from '../security/vault';
 let registration: ServiceWorkerRegistration | undefined;
 type InstallPrompt = Event & {
@@ -6,13 +6,23 @@ type InstallPrompt = Event & {
   userChoice: Promise<{ outcome: string }>;
 };
 let prompt: InstallPrompt | undefined;
-export function askWorker(worker: ServiceWorker, type: string): Promise<Record<string, boolean>> {
+export interface OfflineReport {
+  ready: boolean;
+  total: number;
+  missing: number;
+  unavailable?: boolean;
+}
+type WorkerReply = Partial<OfflineReport> & { allowed?: boolean };
+export function askWorker(worker: ServiceWorker, type: string): Promise<WorkerReply> {
   return new Promise((resolve, reject) => {
     const channel = new MessageChannel();
-    const timeout = setTimeout(() => {
-      channel.port1.close();
-      reject(new Error('WORKER_TIMEOUT'));
-    }, 5000);
+    const timeout = setTimeout(
+      () => {
+        channel.port1.close();
+        reject(new Error('WORKER_TIMEOUT'));
+      },
+      type === 'REPAIR_CACHE' ? 15000 : 5000,
+    );
     channel.port1.onmessage = (event) => {
       clearTimeout(timeout);
       channel.port1.close();
@@ -57,39 +67,42 @@ export function usePWA() {
   const [waiting, setWaiting] = useState(false);
   const [canInstall, setCanInstall] = useState(false);
   const [online, setOnline] = useState(navigator.onLine);
+  const refresh = useCallback(async (repair = false): Promise<OfflineReport> => {
+    const worker = navigator.serviceWorker?.controller ?? registration?.active;
+    let report: OfflineReport = { ready: false, total: 0, missing: 0, unavailable: true };
+    try {
+      if (worker) {
+        const reply = await askWorker(worker, repair ? 'REPAIR_CACHE' : 'CHECK_CACHE');
+        report = {
+          ready: reply.ready === true,
+          total: reply.total ?? 0,
+          missing: reply.missing ?? 0,
+        };
+      }
+    } catch {
+      // No respuesta no equivale a descarga incompleta ni a descarga confirmada.
+    }
+    setReady(report.ready);
+    return report;
+  }, []);
   useEffect(() => {
-    let disposed = false;
-    const check = async () => {
+    const handler = () => {
       setOnline(navigator.onLine);
       setWaiting(Boolean(registration?.waiting));
       setCanInstall(Boolean(prompt));
-      const worker = registration?.active;
-      try {
-        const result = worker ? await askWorker(worker, 'CHECK_CACHE') : { ready: false };
-        if (!disposed) setReady(result.ready === true);
-      } catch {
-        if (!disposed) setReady(false);
-      }
+      void refresh();
     };
-    const handler = () => void check();
     handler();
     const interval = setInterval(handler, 30_000);
     for (const event of ['online', 'offline', 'focus', 'pwa-change'])
       window.addEventListener(event, handler);
     return () => {
-      disposed = true;
       clearInterval(interval);
       for (const event of ['online', 'offline', 'focus', 'pwa-change'])
         window.removeEventListener(event, handler);
     };
-  }, []);
-  return {
-    ready,
-    waiting,
-    online,
-    canInstall,
-    refresh: () => setTimeout(() => window.dispatchEvent(new Event('pwa-change')), 0),
-  };
+  }, [refresh]);
+  return { ready, waiting, online, canInstall, refresh };
 }
 export async function installPWA() {
   if (!prompt) return false;
@@ -103,7 +116,7 @@ export async function updatePWA() {
   if (!registration?.waiting) return false;
   try {
     const result = await askWorker(registration.waiting, 'REQUEST_ACTIVATION');
-    return result.allowed;
+    return result.allowed === true;
   } catch {
     return false;
   }
