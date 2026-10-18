@@ -26,10 +26,10 @@ Abrir `http://localhost:4173` en el mismo equipo donde ejecutaste estos comandos
 
 ## Funciones implementadas
 
-- Plan editable parcial, trece categorías, orden mediante botones y hasta tres pasos iniciales. Los editores de secciones, preferencias del plan, contactos y reflexiones guardan y vuelven al inicio con confirmación.
-- Seis habilidades con precauciones, pasos, personalización y tarjeta de pros/contras.
+- Plan editable parcial, agrupado por lo que ayuda, lo que se nota y a quién acudir, con preguntas cotidianas, orden mediante botones y hasta tres pasos iniciales. Los editores de secciones, preferencias del plan, contactos y reflexiones guardan y vuelven al inicio con confirmación.
+- Seis guías con títulos descriptivos, precauciones, pasos, notas personales y tarjeta de pros/contras; origen DBT opcional.
 - Modo crisis en una acción, ayuda pública bloqueado y plan/contactos solo dentro de sesión abierta.
-- Red personal/profesional, alternativas, mensajes revisados antes de abrir apps externas y copia manual.
+- Contactos personales/profesionales separados de las líneas de atención; mensajes revisados antes de abrir apps externas y copia manual.
 - Selector territorial con123 y106 para Bogotá D. C., fuentes oficiales y fecha de consulta documental; sin extrapolar cobertura. [Evidencia y límites](docs/bogota-resources.md).
 - Reflexión voluntaria, intensidades opcionales y edición/eliminación; sin diagnóstico automático.
 - Bóveda AES-256-GCM autenticada, PBKDF2-HMAC-SHA-256 entre600000 y2000000 iteraciones, frase NFC mínimo16 puntos de código, clave no extraíble solo RAM.

@@ -5,7 +5,7 @@ const fixture = JSON.parse(
 );
 export async function recoverLegacyPlan(page: Page, base = '') {
   await page.goto(`${base}/#/unlock`);
-  await expect(page.getByRole('heading', { name: 'Prepara tu refugio' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Crea tu plan personal' })).toBeVisible();
   await page.evaluate(
     async ({ envelope, name }) => {
       const db = await new Promise<IDBDatabase>((resolve, reject) => {
@@ -32,7 +32,7 @@ export async function recoverLegacyPlan(page: Page, base = '') {
   await page.getByRole('button', { name: 'Desbloquear mi plan', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Mi plan personal', exact: true })).toBeVisible();
   await page.goto(`${base}/#/plan/safetySteps`);
-  await expect(page.getByLabel('Mis próximos pasos · nota 1')).toHaveValue(
+  await expect(page.getByLabel('Mis pasos para un momento difícil · nota 1')).toHaveValue(
     'Nota sintética recuperada del formato anterior',
   );
 }

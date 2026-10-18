@@ -34,11 +34,13 @@ test('GitHub Pages: plan cifrado y reinicio offline en subruta', async ({ page, 
   await page.getByLabel('Repite la frase secreta').fill(phrase);
   await page.getByLabel('Confirmo que tengo 18 años o más.').check();
   await page.getByLabel(/Entiendo que este plan puede contener/).check();
-  await page.getByRole('button', { name: 'Crear mi plan cifrado' }).click();
+  await page.getByRole('button', { name: 'Crear mi plan' }).click();
   await expect(page.getByRole('heading', { name: 'Mi plan personal', exact: true })).toBeVisible();
   await page.goto('/refugio/#/plan/safetySteps');
-  await page.getByRole('button', { name: 'Agregar nota' }).click();
-  await page.getByLabel('Mis próximos pasos · nota 1').fill('Paso de prueba para Pages');
+  await page.getByRole('button', { name: 'Escribir mi primera nota' }).click();
+  await page
+    .getByLabel('Mis pasos para un momento difícil · nota 1')
+    .fill('Paso de prueba para Pages');
   await page.getByRole('button', { name: 'Guardar y volver al inicio' }).click();
   await expect(page.getByRole('status')).toContainText('Guardado');
   await page.goto('/refugio/#/settings');
@@ -49,7 +51,7 @@ test('GitHub Pages: plan cifrado y reinicio offline en subruta', async ({ page, 
   expect(names).toContain('refugio:/refugio/');
   await context.setOffline(true);
   await page.reload();
-  await page.getByRole('link', { name: 'Mi espacio', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'Abrir mi plan', exact: true }).click();
   await page.getByLabel('Frase secreta', { exact: true }).fill(phrase);
   await page.getByRole('button', { name: 'Desbloquear mi plan', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Mi plan personal', exact: true })).toBeVisible();

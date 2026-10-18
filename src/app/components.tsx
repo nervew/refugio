@@ -1,7 +1,8 @@
 import { useId, useRef, useEffect, type ReactNode } from 'react';
-import { LockKeyhole, ArrowRight, Phone, ShieldCheck, Leaf, X } from 'lucide-react';
+import { LockKeyhole, ArrowRight, UsersRound, ShieldCheck, Leaf, X } from 'lucide-react';
 import { SafeLink, useApp, useVault } from './context';
 import { Unlock } from '../features/Unlock';
+import { planAccess } from './plan-access';
 export function PageTitle({
   eyebrow,
   children,
@@ -27,13 +28,13 @@ export function HelpBar() {
   return (
     <nav className="help-bar" aria-label="Apoyo disponible">
       <SafeLink to="/skills">
-        <Leaf size={19} aria-hidden="true" /> Otra habilidad
+        <Leaf size={19} aria-hidden="true" /> Guías
       </SafeLink>
       <SafeLink to="/support">
-        <Phone size={19} aria-hidden="true" /> Pedir apoyo
+        <UsersRound size={19} aria-hidden="true" /> Mis contactos
       </SafeLink>
       <SafeLink to="/emergency" className="help-emergency">
-        Emergencias <ArrowRight size={18} aria-hidden="true" />
+        Líneas y urgencias <ArrowRight size={18} aria-hidden="true" />
       </SafeLink>
     </nav>
   );
@@ -47,11 +48,12 @@ export function PrivacyNote() {
   );
 }
 export function LockedNote() {
+  const { status } = useVault();
   return (
     <div className="notice">
       <LockKeyhole size={20} aria-hidden="true" />
-      <p>Tu plan está bloqueado. Las guías públicas siguen disponibles.</p>
-      <SafeLink to="/unlock">Ver mi plan</SafeLink>
+      <p>{planAccess(status).description}</p>
+      <SafeLink to="/unlock">{planAccess(status).label}</SafeLink>
     </div>
   );
 }

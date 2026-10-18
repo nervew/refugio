@@ -26,7 +26,7 @@ export function Settings({ appearance }: { appearance: Appearance }) {
     <>
       <PageTitle
         eyebrow="Tu espacio, tus decisiones"
-        description="La información personal se guarda cifrada en este navegador. Las guías públicas están disponibles sin abrir tu plan."
+        description="La información personal se guarda cifrada en este navegador. Las guías están disponibles sin abrir tu plan."
       >
         Ajustes y privacidad
       </PageTitle>
@@ -128,8 +128,8 @@ export function Settings({ appearance }: { appearance: Appearance }) {
           {pwa.waiting ? (
             <>
               <p>
-                Hay una nueva versión. Sal del modo crisis en todas las pestañas y guarda tus
-                cambios antes de actualizar.
+                Hay una nueva versión. Antes de actualizar, guarda tus cambios y vuelve al inicio en
+                todas las pestañas de Refugio.
               </p>
               <button
                 className="button secondary"
@@ -311,7 +311,7 @@ export function Privacy() {
           aviso provisional no declara cumplimiento legal.
         </p>
         <SafeLink to="/crisis" className="button primary">
-          Abrir apoyo público
+          Abrir una guía sin crear un plan
         </SafeLink>
       </div>
     </section>

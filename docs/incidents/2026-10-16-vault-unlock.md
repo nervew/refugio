@@ -21,3 +21,5 @@ No se garantiza reparación de otros daños, formatos desconocidos o pérdida de
 El test de regresión falló con INVALID_FILE antes del cambio y pasa después. Hay pruebas de recuperación de un cifrado histórico autenticado, preservación de texto/escapes, rechazo de frase incorrecta y estructuras inválidas, y fixture sintético generado con el serializador anterior. La fixture pública contiene solo datos ficticios y una frase de prueba conocida. Las pruebas del navegador instalan ese registro exclusivamente en contextos de prueba limpios y comprueban que se recupera su nota.
 
 34 pruebas unitarias,14 E2E y build aprobados. El E2E recupera una nota del fixture histórico. Despliegue en curso al redactar este registro.
+
+Resultado remoto: PR#3 integrada en644e7c2aa0d3b46c299b7303ded58edafe1d23ec. CI38907896954 y38908232079 aprobadas; Pages38908232209 publicado. Workflow38908488995:9 pruebas sobre la URL pública aprobadas, incluida la recuperación del fixture histórico con conservación de la nota en Chromium escritorio/móvil y WebKit. El plan real del usuario no se leyó ni modificó; requiere actualizar la app y probar su frase original.

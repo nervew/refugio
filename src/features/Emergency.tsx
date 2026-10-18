@@ -21,9 +21,12 @@ export function Emergency() {
       </PageTitle>
       <section className="panel">
         <h2>
-          <MapPin size={22} aria-hidden="true" /> Recursos para tu región
+          <MapPin size={22} aria-hidden="true" /> ¿Dónde necesitas atención?
         </h2>
-        <p>Elige dónde estás ahora. Refugio no usa tu ubicación automática.</p>
+        <p>
+          Elige el lugar donde necesitas atención para consultar las líneas disponibles y su
+          cobertura. Refugio no detecta tu ubicación.
+        </p>
         <div className="two-columns">
           <label className="field">
             País
@@ -116,10 +119,10 @@ export function Emergency() {
             inmediato, busca ayuda presencial en un servicio de urgencias o pide compañía cercana.
           </p>
           <SafeLink to="/support" className="button primary">
-            Ver mi red de apoyo
+            Ver mis contactos
           </SafeLink>
           <SafeLink to="/crisis" className="button secondary">
-            Volver al siguiente paso
+            Ver una guía para este momento
           </SafeLink>
         </section>
       ) : null}

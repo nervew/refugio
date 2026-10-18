@@ -85,19 +85,20 @@ function Layout() {
                 className={location.pathname.startsWith('/skills') ? 'active' : ''}
                 to="/skills"
               >
-                Habilidades
+                Guías
               </SafeLink>
               <SafeLink
                 className={location.pathname.startsWith('/support') ? 'active' : ''}
                 to="/support"
               >
-                Mi apoyo
+                Mis contactos
               </SafeLink>
             </nav>
             <div className="header-actions">
               {session.data ? (
                 <button
                   className="text-button lock-button"
+                  aria-label="Bloquear"
                   onClick={() => {
                     if (!dirty || window.confirm('¿Bloquear y descartar cambios sin guardar?'))
                       vault.lock();
@@ -107,9 +108,13 @@ function Layout() {
                   <span>Bloquear</span>
                 </button>
               ) : (
-                <SafeLink className="text-button lock-button" to="/unlock">
+                <SafeLink
+                  className="text-button lock-button"
+                  to="/unlock"
+                  aria-label="Abrir mi plan"
+                >
                   <LockKeyhole size={17} aria-hidden="true" />
-                  <span>Mi espacio</span>
+                  <span>Abrir mi plan</span>
                 </SafeLink>
               )}
               <SafeLink to="/settings" className="icon-button" aria-label="Ajustes y privacidad">
@@ -187,7 +192,7 @@ function Layout() {
             <SafeLink to="/privacy">Privacidad y límites</SafeLink>
             <SafeLink to="/welcome">Acerca de Refugio</SafeLink>
             <SafeLink to="/emergency">
-              Buscar ayuda <ArrowUpRight size={15} aria-hidden="true" />
+              Líneas y emergencias <ArrowUpRight size={15} aria-hidden="true" />
             </SafeLink>
           </div>
           <p className="evaluation">
@@ -224,7 +229,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean
         <h1>Podemos volver a empezar</h1>
         <p>
           La vista no pudo abrirse. Tus datos guardados no se han borrado. Intenta recargar para
-          volver al apoyo público.
+          volver a las guías.
         </p>
         <button onClick={() => window.location.reload()}>Recargar Refugio</button>
       </main>

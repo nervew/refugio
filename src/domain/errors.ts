@@ -20,7 +20,7 @@ export class LocalError extends Error {
   }
 }
 export const messages: Record<ErrorCode, string> = {
-  LOCKED: 'Desbloquea tu plan para continuar. Las guías públicas siguen disponibles.',
+  LOCKED: 'Desbloquea tu plan para continuar. Las guías siguen disponibles.',
   SESSION_EXPIRED: 'Tu sesión se bloqueó para proteger tus datos. Puedes volver a abrirla.',
   UNLOCK_FAILED: 'No pudimos abrir esta copia. Revisa la frase o utiliza otra copia.',
   INVALID_INPUT: 'Revisa los campos y sus límites. No se guardaron cambios.',
@@ -33,7 +33,7 @@ export const messages: Record<ErrorCode, string> = {
   CONFLICT:
     'Hay cambios guardados en otra pestaña. Conserva tu borrador, bloquea y vuelve a abrir el plan para revisarlos.',
   STORAGE_UNAVAILABLE:
-    'No pudimos acceder al almacenamiento. Tus guías públicas siguen disponibles. Usa un navegador compatible.',
+    'No pudimos acceder al almacenamiento. Las guías siguen disponibles. Usa un navegador compatible.',
   QUOTA_EXCEEDED:
     'No se guardó: falta espacio en este dispositivo. Descarga una copia de lo guardado y vuelve a intentarlo.',
   CRYPTO_UNAVAILABLE:

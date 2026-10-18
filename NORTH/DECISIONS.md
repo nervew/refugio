@@ -51,3 +51,7 @@ El usuario confirmó publicar la evaluación en GitHub Pages con datos ficticios
 ## 2026-10-16: ajustes UX y recursos de Bogotá para evaluación
 
 Por solicitud del usuario, guardar secciones, preferencias del plan, contactos y reflexiones vuelve al inicio solo tras persistir; se conserva confirmación genérica. Revisión con subagentes UX/diseño: paleta calmada con acentos y temas oscuros equivalentes. El catálogo de demo incorpora123 y106 solo para Bogotá con fuentes oficiales y fecha documental; evidencia/límites en docs/bogota-resources.md. Las revisiones editorial independiente, clínica y demás gates del piloto formal siguen pendientes.
+
+## 2026-10-17: implementar comprensión para primer uso
+
+El usuario autorizó implementar la auditoría UX: propósito emocional explícito, guías con nombres descriptivos y DBT opcional, separación de agenda privada/líneas de atención, estados de plan y agrupación opcional del plan. Se mantienen las seis guías, precauciones, identificadores, esquema/cifrado y consentimientos. Cambios y validación en docs/ux/2026-10-17-implementation.md. Las pruebas técnicas no sustituyen pruebas de comprensión ni revisión profesional.
